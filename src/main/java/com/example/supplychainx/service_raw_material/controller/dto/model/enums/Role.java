@@ -1,0 +1,14 @@
+package com.example.supplychainx.service_raw_material.controller.dto.model.enums;
+
+public enum Role {
+    ADMIN,
+    GESTIONNAIRE_APPROVISIONNEMENT,
+    RESPONSABLE_ACHATS,
+    SUPERVISEUR_LOGISTIQUE,
+    CHEF_PRODUCTION,
+    PLANIFICATEUR,
+    SUPERVISEUR_PRODUCTION,
+    GESTIONNAIRE_COMMERCIAL,
+    RESPONSABLE_LOGISTIQUE,
+    SUPERVISEUR_LIVRAISONS
+}
