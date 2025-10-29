@@ -1,6 +1,6 @@
-package com.example.supplychainx.service_raw_material.controller.dto;
+package com.example.supplychainx.service_approvisionnement.dto.User;
 
-import com.example.supplychainx.service_raw_material.controller.dto.model.enums.Role;
+import com.example.supplychainx.service_approvisionnement.model.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 

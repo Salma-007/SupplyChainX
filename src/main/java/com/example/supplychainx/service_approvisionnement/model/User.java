@@ -1,13 +1,13 @@
-package com.example.supplychainx.service_raw_material.controller.dto.model;
+package com.example.supplychainx.service_approvisionnement.model;
 
-import com.example.supplychainx.service_raw_material.controller.dto.model.enums.Role;
+import com.example.supplychainx.service_approvisionnement.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "user")
+@Entity(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 

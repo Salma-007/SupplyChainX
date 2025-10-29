@@ -1,4 +1,4 @@
-package com.example.supplychainx.service_raw_material.controller.dto.repository;
+package com.example.supplychainx.service_approvisionnement.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

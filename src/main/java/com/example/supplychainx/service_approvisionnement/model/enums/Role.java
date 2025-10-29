@@ -1,4 +1,4 @@
-package com.example.supplychainx.service_raw_material.controller.dto.model.enums;
+package com.example.supplychainx.service_approvisionnement.model.enums;
 
 public enum Role {
     ADMIN,
