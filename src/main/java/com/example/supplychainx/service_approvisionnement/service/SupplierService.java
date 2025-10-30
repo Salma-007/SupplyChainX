@@ -23,7 +23,6 @@ public class SupplierService {
         this.supplierMapper = supplierMapper;
     }
 
-
     public SupplierResponseDTO createSupplier(SupplierRequestDTO dto) {
         Supplier supplier = supplierMapper.toEntity(dto);
         Supplier saved = supplierRepository.save(supplier);
@@ -46,8 +45,10 @@ public class SupplierService {
     public SupplierResponseDTO updateSupplier(Long id, SupplierRequestDTO dto) {
         Supplier existing = supplierRepository.findById(id)
                 .orElseThrow(() -> new SupplierNotFoundException("Fournisseur introuvable avec l'id : " + id));
-
-        supplierMapper.updateSupplierFromDto(dto, existing);
+        existing.setName(dto.getName());
+        existing.setRating(dto.getRating());
+        existing.setContact(dto.getContact());
+        existing.setLeadTime(dto.getLeadTime());
         Supplier updated = supplierRepository.save(existing);
         return supplierMapper.toResponseDto(updated);
     }

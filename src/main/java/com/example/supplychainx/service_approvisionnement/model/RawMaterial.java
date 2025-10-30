@@ -3,15 +3,13 @@ package com.example.supplychainx.service_approvisionnement.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Supplier {
+public class RawMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,20 +18,14 @@ public class Supplier {
     private String name;
 
     @Column(nullable = false)
-    private String contact;
+    private int stock;
 
     @Column(nullable = false)
-    private Double rating;
+    private int stockMin;
 
     @Column(nullable = false)
-    private int leadTime;
+    private String unit;
 
-    @ManyToMany
-    @JoinTable(
-            name = "supplier_rawmaterial",
-            joinColumns = @JoinColumn(name = "supplier_id"),
-    inverseJoinColumns = @JoinColumn(name = "rawmaterial_id")
-    )
-    private Set<RawMaterial> rawMaterials;
-
+    @ManyToMany(mappedBy = "rawMaterials")
+    private Set<Supplier> suppliers = new HashSet<>();
 }

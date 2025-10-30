@@ -42,12 +42,6 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("user not found with id : " + id));
 
-        existingUser.setFirstName(dto.getFirstName());
-        existingUser.setLastName(dto.getLastName());
-        existingUser.setEmail(dto.getEmail());
-        existingUser.setPassword(dto.getPassword());
-        existingUser.setRole(dto.getRole());
-
         User updated = userRepository.save(existingUser);
         return userMapper.toResponseDto(updated);
     }

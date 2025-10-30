@@ -4,7 +4,6 @@ import com.example.supplychainx.service_approvisionnement.dto.User.UserRequestDT
 import com.example.supplychainx.service_approvisionnement.dto.User.UserResponseDTO;
 import com.example.supplychainx.service_approvisionnement.service.UserService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

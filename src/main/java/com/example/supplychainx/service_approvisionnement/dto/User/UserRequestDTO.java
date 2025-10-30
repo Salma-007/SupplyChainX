@@ -11,8 +11,10 @@ public class UserRequestDTO {
 
     private String firstName;
     private String lastName;
-    private String email;
+
     @Email(message = "Format d'email invalide")
+    private String email;
+
     private String password;
     private Role role;
 }

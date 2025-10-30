@@ -12,5 +12,4 @@ public interface SupplierMapper {
     Supplier toEntity(SupplierRequestDTO dto);
     SupplierResponseDTO toResponseDto(Supplier supplier);
 
-    void updateSupplierFromDto(SupplierRequestDTO dto, @MappingTarget Supplier supplier);
 }
