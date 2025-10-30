@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,4 +29,7 @@ public class RawMaterial {
 
     @ManyToMany(mappedBy = "rawMaterials")
     private Set<Supplier> suppliers = new HashSet<>();
+
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SupplyOrderItem> orderItems;
 }

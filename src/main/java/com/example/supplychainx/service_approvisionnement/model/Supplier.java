@@ -3,8 +3,6 @@ package com.example.supplychainx.service_approvisionnement.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,5 +33,8 @@ public class Supplier {
     inverseJoinColumns = @JoinColumn(name = "rawmaterial_id")
     )
     private Set<RawMaterial> rawMaterials;
+
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SupplyOrder> orders;
 
 }

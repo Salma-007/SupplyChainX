@@ -7,6 +7,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 public class SupplyOrder {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Order date is required")
@@ -24,4 +26,10 @@ public class SupplyOrder {
     @Column(nullable = false)
     private SupplyOrderStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
+    @OneToMany(mappedBy = "supplyOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SupplyOrderItem> orderItems;
 }
