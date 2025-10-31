@@ -26,12 +26,7 @@ public class Supplier {
     @Column(nullable = false)
     private int leadTime;
 
-    @ManyToMany
-    @JoinTable(
-            name = "supplier_rawmaterial",
-            joinColumns = @JoinColumn(name = "supplier_id"),
-    inverseJoinColumns = @JoinColumn(name = "rawmaterial_id")
-    )
+    @ManyToMany(mappedBy = "suppliers")
     private Set<RawMaterial> rawMaterials;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)

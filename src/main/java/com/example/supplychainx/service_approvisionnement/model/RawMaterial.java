@@ -27,7 +27,12 @@ public class RawMaterial {
     @Column(nullable = false)
     private String unit;
 
-    @ManyToMany(mappedBy = "rawMaterials", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "supplier_rawmaterial",
+            joinColumns = @JoinColumn(name = "rawmaterial_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_id")
+    )
     private Set<Supplier> suppliers = new HashSet<>();
 
     @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)

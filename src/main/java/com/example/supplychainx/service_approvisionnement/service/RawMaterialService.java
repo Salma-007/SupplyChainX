@@ -9,7 +9,6 @@ import com.example.supplychainx.service_approvisionnement.repository.RawMaterial
 import com.example.supplychainx.service_approvisionnement.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
