@@ -27,7 +27,7 @@ public class RawMaterial {
     @Column(nullable = false)
     private String unit;
 
-    @ManyToMany(mappedBy = "rawMaterials")
+    @ManyToMany(mappedBy = "rawMaterials", fetch = FetchType.EAGER)
     private Set<Supplier> suppliers = new HashSet<>();
 
     @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)

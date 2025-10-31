@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class RawMaterialRequestDTO {
@@ -14,4 +16,6 @@ public class RawMaterialRequestDTO {
     @Min(value = 1, message = "La note doit être >= 0")
     private int stockMin;
     private String unit;
+
+    private List<Long> supplierIds;
 }

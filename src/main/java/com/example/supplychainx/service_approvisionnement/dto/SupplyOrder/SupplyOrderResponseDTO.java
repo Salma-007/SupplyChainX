@@ -10,5 +10,6 @@ import java.time.LocalDate;
 public class SupplyOrderResponseDTO {
     private Long id;
     private LocalDate orderdate;
+    private Long supplierId;
     private SupplyOrderStatus status;
 }

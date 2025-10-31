@@ -6,23 +6,29 @@ import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterial
 import com.example.supplychainx.service_approvisionnement.mapper.RawMaterialMapper;
 import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.repository.RawMaterialRepository;
+import com.example.supplychainx.service_approvisionnement.repository.SupplierRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class RawMaterialService {
 
     private final RawMaterialRepository rawMaterialRepository;
     private final RawMaterialMapper rawMaterialMapper;
-
-    public RawMaterialService(RawMaterialRepository rawMaterialRepository, RawMaterialMapper rawMaterialMapper) {
-        this.rawMaterialRepository = rawMaterialRepository;
-        this.rawMaterialMapper = rawMaterialMapper;
-    }
+    private final SupplierRepository supplierRepository;
 
     public RawMaterialResponseDTO createMaterial(RawMaterialRequestDTO dto){
         RawMaterial material = rawMaterialMapper.toEntity(dto);
+        if (dto.getSupplierIds() != null) {
+            material.setSuppliers(
+                    new HashSet<>(supplierRepository.findAllById(dto.getSupplierIds()))
+            );
+        }
         RawMaterial saved = rawMaterialRepository.save(material);
         return rawMaterialMapper.toResponseDto(saved);
     }
