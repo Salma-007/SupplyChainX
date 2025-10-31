@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SupplyOrderItemRepository extends BaseRepository<SupplyOrderItem, Long>{
+    boolean existsByRawMaterialId(Long materialId);
 }

@@ -2,11 +2,13 @@ package com.example.supplychainx.service_approvisionnement.service;
 
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;
+import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
 import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
 import com.example.supplychainx.service_approvisionnement.mapper.RawMaterialMapper;
 import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.repository.RawMaterialRepository;
 import com.example.supplychainx.service_approvisionnement.repository.SupplierRepository;
+import com.example.supplychainx.service_approvisionnement.repository.SupplyOrderItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
@@ -20,6 +22,7 @@ public class RawMaterialService {
     private final RawMaterialRepository rawMaterialRepository;
     private final RawMaterialMapper rawMaterialMapper;
     private final SupplierRepository supplierRepository;
+    private final SupplyOrderItemRepository supplyOrderItemRepository;
 
     public RawMaterialResponseDTO createMaterial(RawMaterialRequestDTO dto){
         RawMaterial material = rawMaterialMapper.toEntity(dto);
@@ -48,6 +51,10 @@ public class RawMaterialService {
     public void deleteMaterial(Long id){
         if(!rawMaterialRepository.existsById(id)){
             throw new RawMaterialNotFoundException("Raw material not found with id: " + id);
+        }
+
+        if (supplyOrderItemRepository.existsByRawMaterialId(id)) {
+            throw new BusinessException("Impossible de supprimer la matière première. Elle est utilisée dans une ou plusieurs commandes.");
         }
         rawMaterialRepository.deleteById(id);
     }

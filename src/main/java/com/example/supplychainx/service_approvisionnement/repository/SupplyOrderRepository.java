@@ -10,4 +10,5 @@ public interface SupplyOrderRepository extends BaseRepository<SupplyOrder, Long>
             "JOIN FETCH oi.rawMaterial rm " +
             "JOIN FETCH o.supplier s")
     List<SupplyOrder> findAllWithFullDetails();
+    boolean existsBySupplierId(Long supplierId);
 }
