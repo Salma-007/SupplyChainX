@@ -3,6 +3,7 @@ package com.example.supplychainx.service_approvisionnement.service;
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderRequestDTO;
 import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
 import com.example.supplychainx.service_approvisionnement.exceptions.SupplierNotFoundException;
+import com.example.supplychainx.service_approvisionnement.exceptions.SupplyOrderNotFoundException;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplierMapper;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderItemMapper;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
@@ -53,5 +54,39 @@ public class SupplyOrderService {
         return orderRepository.save(order);
     }
 
+    public SupplyOrder getOrderById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + id));
+    }
 
+    public List<SupplyOrder> getAllOrders() {
+        for(SupplyOrder order: orderRepository.findAll()){
+            System.out.println(order.getOrderItems());
+        }
+        return orderRepository.findAll();
+    }
+
+    @Transactional
+    public SupplyOrder updateOrderStatus(Long orderId, SupplyOrderStatus newStatus) {
+        SupplyOrder order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + orderId));
+
+        if (order.getStatus() == SupplyOrderStatus.RECUE) {
+            throw new RuntimeException("Impossible de modifier le statut d'une commande déjà annulée.");
+        }
+
+        order.setStatus(newStatus);
+        return orderRepository.save(order);
+    }
+
+    @Transactional
+    public void deleteOrder(Long orderId) {
+        SupplyOrder order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + orderId));
+
+        if (order.getStatus() == SupplyOrderStatus.RECUE) {
+            throw new RuntimeException("Impossible de supprimer une commande déjà LIVREE.");
+        }
+        orderRepository.delete(order);
+    }
 }

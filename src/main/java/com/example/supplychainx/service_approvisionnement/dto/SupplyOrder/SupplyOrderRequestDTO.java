@@ -1,6 +1,6 @@
 package com.example.supplychainx.service_approvisionnement.dto.SupplyOrder;
 
-import com.example.supplychainx.service_approvisionnement.dto.SupplyOrderItemDTO;
+import com.example.supplychainx.service_approvisionnement.dto.SupplyOrderItem.SupplyOrderItemDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package com.example.supplychainx.service_approvisionnement.dto;
+package com.example.supplychainx.service_approvisionnement.dto.SupplyOrderItem;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

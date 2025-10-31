@@ -17,6 +17,7 @@ public interface SupplyOrderMapper {
     SupplyOrder toEntity(SupplyOrderRequestDTO dto);
 
     @Mapping(target = "supplierId", source = "supplier.id")
+    @Mapping(target = "orderItems", source = "orderItems")
     @Mapping(target = "status", source = "status")
     SupplyOrderResponseDTO toResponseDto(SupplyOrder supplyOrder);
 
