@@ -1,6 +1,7 @@
 package com.example.supplychainx.service_approvisionnement.service;
 
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderRequestDTO;
+import com.example.supplychainx.service_approvisionnement.exceptions.OrderIsReceivedException;
 import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
 import com.example.supplychainx.service_approvisionnement.exceptions.SupplierNotFoundException;
 import com.example.supplychainx.service_approvisionnement.exceptions.SupplyOrderNotFoundException;
@@ -60,9 +61,6 @@ public class SupplyOrderService {
     }
 
     public List<SupplyOrder> getAllOrders() {
-        for(SupplyOrder order: orderRepository.findAll()){
-            System.out.println(order.getOrderItems());
-        }
         return orderRepository.findAll();
     }
 
@@ -72,7 +70,7 @@ public class SupplyOrderService {
                 .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + orderId));
 
         if (order.getStatus() == SupplyOrderStatus.RECUE) {
-            throw new RuntimeException("Impossible de modifier le statut d'une commande déjà annulée.");
+            throw new OrderIsReceivedException("Impossible de modifier le statut d'une commande déjà annulée.");
         }
 
         order.setStatus(newStatus);
@@ -85,7 +83,7 @@ public class SupplyOrderService {
                 .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + orderId));
 
         if (order.getStatus() == SupplyOrderStatus.RECUE) {
-            throw new RuntimeException("Impossible de supprimer une commande déjà LIVREE.");
+            throw new OrderIsReceivedException("Impossible de supprimer une commande déjà LIVREE.");
         }
         orderRepository.delete(order);
     }

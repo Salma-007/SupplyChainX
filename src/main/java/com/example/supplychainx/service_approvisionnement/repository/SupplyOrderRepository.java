@@ -2,7 +2,6 @@ package com.example.supplychainx.service_approvisionnement.repository;
 
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrder;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 
 public interface SupplyOrderRepository extends BaseRepository<SupplyOrder, Long>{

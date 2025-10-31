@@ -64,4 +64,11 @@ public class RawMaterialService {
         RawMaterial updated = rawMaterialRepository.save(existing);
         return rawMaterialMapper.toResponseDto(updated);
     }
+
+    public List<RawMaterialResponseDTO> getLowStockRawMaterials() {
+        List<RawMaterial> materials = rawMaterialRepository.findLowStockRawMaterials();
+        return materials.stream()
+                .map(rawMaterialMapper::toResponseDto)
+                .collect(Collectors.toList());
+    }
 }

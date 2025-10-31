@@ -2,10 +2,10 @@ package com.example.supplychainx.service_approvisionnement.controller;
 
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;
+import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.service.RawMaterialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -42,5 +42,10 @@ public class RawMaterialController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         rawMaterialService.deleteMaterial(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/low-stock")
+    public ResponseEntity<List<RawMaterialResponseDTO>> getLowStockRawMaterials() {
+        return ResponseEntity.ok(rawMaterialService.getLowStockRawMaterials());
     }
 }
