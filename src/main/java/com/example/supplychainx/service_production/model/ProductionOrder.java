@@ -17,7 +17,6 @@ public class ProductionOrder {
 
     private int quantity;
 
-    @Column(nullable = false)
     private ProductionOrderStatus status;
 
     @Column(nullable = false)

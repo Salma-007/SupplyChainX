@@ -7,7 +7,7 @@ import com.example.supplychainx.service_production.exceptions.ProductNotFoundExc
 import com.example.supplychainx.service_production.mapper.ProductMapper;
 import com.example.supplychainx.service_production.model.Product;
 import com.example.supplychainx.service_production.repository.ProductRepository;
-import com.example.supplychainx.service_production.repository.ProductOrderRepository;
+import com.example.supplychainx.service_production.repository.ProductionOrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final ProductOrderRepository productionOrderRepository;
+    private final ProductionOrderRepository productionOrderRepository;
 
     @Transactional
     public ProductResponseDTO addProduct(ProductRequestDTO dto){
