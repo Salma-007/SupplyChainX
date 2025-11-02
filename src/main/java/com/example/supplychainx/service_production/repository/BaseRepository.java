@@ -1,4 +1,4 @@
-package com.example.supplychainx.service_approvisionnement.repository;
+package com.example.supplychainx.service_production.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

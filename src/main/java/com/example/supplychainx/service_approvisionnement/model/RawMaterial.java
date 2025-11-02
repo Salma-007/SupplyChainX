@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_approvisionnement.model;
 
+import com.example.supplychainx.service_production.model.BillOfMaterial;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,4 +38,7 @@ public class RawMaterial {
 
     @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SupplyOrderItem> orderItems;
+
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BillOfMaterial> bills;
 }
