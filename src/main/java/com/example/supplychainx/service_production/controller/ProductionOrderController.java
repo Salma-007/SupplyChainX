@@ -46,4 +46,17 @@ public class ProductionOrderController {
         productionOrderService.deleteProductionOrder(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}/estimated-time")
+    public ResponseEntity<Long> getEstimatedProductionTime(@PathVariable Long id) {
+        Long estimatedTime = productionOrderService.getEstimatedProductionTime(id);
+        return ResponseEntity.ok(estimatedTime);
+    }
+
+    // pour bloquer un ordre de production en attente
+    @PatchMapping("/{id}/block")
+    public ResponseEntity<ProductionOrderResponseDTO> blockProductionOrder(@PathVariable Long id) {
+        ProductionOrderResponseDTO response = productionOrderService.blockProductionOrder(id);
+        return ResponseEntity.ok(response);
+    }
 }

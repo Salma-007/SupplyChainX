@@ -77,4 +77,33 @@ public class ProductionOrderService {
         productionOrderRepository.deleteById(id);
     }
 
+    public Long getEstimatedProductionTime(Long id) {
+        ProductionOrder order = productionOrderRepository.findById(id)
+                .orElseThrow(() -> new ProductionOrderNotFoundException("Ordre de production non trouvé avec id: " + id));
+
+        Product product = order.getProduct();
+        if (product == null) {
+            throw new ProductNotFoundException("Le produit associé à l'ordre de production " + id + " est introuvable.");
+        }
+
+        Long totalTime = (long) order.getQuantity() * product.getProductionTime();
+
+        return totalTime;
+    }
+
+    @Transactional
+    public ProductionOrderResponseDTO blockProductionOrder(Long id) {
+        ProductionOrder order = productionOrderRepository.findById(id)
+                .orElseThrow(() -> new ProductionOrderNotFoundException("Ordre de production non trouvé avec id: " + id));
+
+        if (order.getStatus() != ProductionOrderStatus.EN_ATTENTE) {
+            throw new BusinessException(
+                    "Impossible de bloquer l'ordre de production " + id + ". Son statut actuel est: " + order.getStatus() +
+                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
+            );
+        }
+        order.setStatus(ProductionOrderStatus.BLOQUE);
+        ProductionOrder updated = productionOrderRepository.save(order);
+        return productionOrderMapper.toResponseDto(updated);
+    }
 }
