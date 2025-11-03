@@ -1,9 +1,13 @@
 package com.example.supplychainx.service_production.dto.product;
 
+import com.example.supplychainx.service_production.dto.billOfMaterial.BillOfMaterialRequestDTO;
+import com.example.supplychainx.service_production.model.BillOfMaterial;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProductRequestDTO {
@@ -19,4 +23,7 @@ public class ProductRequestDTO {
 
     @Min(value = 0, message = "Le stock ne peut être négatif.")
     private int stock;
+
+    @NotNull(message = "Les matières premières sont obligatoires.")
+    private List<BillOfMaterialRequestDTO> bills;
 }

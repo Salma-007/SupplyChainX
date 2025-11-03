@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_production.model;
 
+import com.example.supplychainx.service_production.dto.billOfMaterial.BillOfMaterialRequestDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

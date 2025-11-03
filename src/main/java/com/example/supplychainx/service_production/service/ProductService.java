@@ -1,10 +1,15 @@
 package com.example.supplychainx.service_production.service;
 
 import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
+import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
+import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
+import com.example.supplychainx.service_approvisionnement.repository.RawMaterialRepository;
 import com.example.supplychainx.service_production.dto.product.ProductRequestDTO;
 import com.example.supplychainx.service_production.dto.product.ProductResponseDTO;
 import com.example.supplychainx.service_production.exceptions.ProductNotFoundException;
+import com.example.supplychainx.service_production.mapper.BillOfMaterialMapper;
 import com.example.supplychainx.service_production.mapper.ProductMapper;
+import com.example.supplychainx.service_production.model.BillOfMaterial;
 import com.example.supplychainx.service_production.model.Product;
 import com.example.supplychainx.service_production.repository.ProductRepository;
 import com.example.supplychainx.service_production.repository.ProductionOrderRepository;
@@ -21,11 +26,26 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final BillOfMaterialMapper billMapper;
     private final ProductionOrderRepository productionOrderRepository;
+    private final RawMaterialRepository rawMaterialRepository;
 
     @Transactional
     public ProductResponseDTO addProduct(ProductRequestDTO dto){
         Product product = productMapper.toEntity(dto);
+        List<BillOfMaterial> bills = dto.getBills().stream()
+                .map(billDto->{
+                    BillOfMaterial bill = billMapper.toEntity(billDto);
+                    bill.setProduct(product);
+
+                    RawMaterial rawMaterial = rawMaterialRepository.findById(billDto.getRawMaterialId())
+                            .orElseThrow(() -> new RawMaterialNotFoundException("Matière Première non trouvée avec l'ID: " + billDto.getRawMaterialId()));
+
+                    bill.setRawMaterial(rawMaterial);
+                    return bill;
+                })
+                .collect(Collectors.toList());
+        product.setBills(bills);
         Product saved = productRepository.save(product);
         return productMapper.toResponseDto(saved);
     }
