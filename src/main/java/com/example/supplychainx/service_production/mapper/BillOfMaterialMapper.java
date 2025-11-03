@@ -1,18 +1,20 @@
 package com.example.supplychainx.service_production.mapper;
 
+import com.example.supplychainx.service_approvisionnement.mapper.RawMaterialMapper;
+import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderItemMapper;
 import com.example.supplychainx.service_production.dto.billOfMaterial.BillOfMaterialRequestDTO;
 import com.example.supplychainx.service_production.dto.billOfMaterial.BillOfMaterialResponseDTO;
 import com.example.supplychainx.service_production.model.BillOfMaterial;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {RawMaterialMapper.class})
 public interface BillOfMaterialMapper {
 
-    @Mapping(source = "product.id", target = "productId")
-    @Mapping(source = "rawMaterial.id", target = "rawMaterialId")
-    @Mapping(source = "rawMaterial.name", target = "rawMaterialName")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "rawMaterialId", source = "rawMaterial.id")
+    @Mapping(target = "rawMaterialName", source = "rawMaterial.name")
+    @Mapping(target = "quantity", source = "quantity")
     BillOfMaterialResponseDTO toResponseDto(BillOfMaterial billOfMaterial);
 
     @Mapping(target = "id", ignore = true)
@@ -21,8 +23,4 @@ public interface BillOfMaterialMapper {
     @Mapping(source = "quantity", target = "quantity")
     BillOfMaterial toEntity(BillOfMaterialRequestDTO dto);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "product", ignore = true)
-    @Mapping(target = "rawMaterial", ignore = true)
-    void updateBillOfMaterialFromDto(BillOfMaterialRequestDTO dto, @MappingTarget BillOfMaterial target);
 }

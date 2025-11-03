@@ -10,6 +10,19 @@ import java.util.List;
 @Getter
 @Setter
 public class Product {
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", productionTime=" + productionTime +
+                ", cost=" + cost +
+                ", stock=" + stock +
+                ", bills=" + bills +
+                ", orders=" + orders +
+                '}';
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

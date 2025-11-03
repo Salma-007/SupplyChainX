@@ -24,4 +24,12 @@ public class BillOfMaterial {
     @Column(nullable = false)
     private Integer quantity;
 
+    @Override
+    public String toString() {
+        return "BillOfMaterial{" +
+                "id=" + id +
+                ", rawMaterial=" + rawMaterial.getId() +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

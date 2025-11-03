@@ -47,6 +47,7 @@ public class ProductService {
                 .collect(Collectors.toList());
         product.setBills(bills);
         Product saved = productRepository.save(product);
+        System.out.println(saved.getBills());
         return productMapper.toResponseDto(saved);
     }
 
