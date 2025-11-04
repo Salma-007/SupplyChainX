@@ -47,4 +47,11 @@ public class OrderController {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
+
+    // annulé un order non expedié
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponseDTO> cancelDeliveryOrder(@PathVariable Long id){
+        OrderResponseDTO response = orderService.annulerOrder(id);
+        return ResponseEntity.ok(response);
+    }
 }

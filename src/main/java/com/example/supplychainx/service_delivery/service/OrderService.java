@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_delivery.service;
 
+import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
 import com.example.supplychainx.service_delivery.dto.order.OrderRequestDTO;
 import com.example.supplychainx.service_delivery.dto.order.OrderResponseDTO;
 import com.example.supplychainx.service_delivery.exceptions.CustomerNotFoundException;
@@ -13,6 +14,7 @@ import com.example.supplychainx.service_delivery.repository.CustomerRepository;
 import com.example.supplychainx.service_delivery.repository.OrderRepository;
 import com.example.supplychainx.service_production.exceptions.ProductNotFoundException;
 import com.example.supplychainx.service_production.model.Product;
+import com.example.supplychainx.service_production.model.enums.ProductionOrderStatus;
 import com.example.supplychainx.service_production.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +77,18 @@ public class OrderService {
 
         Order saved = orderRepository.save(updatedOrder);
         return orderMapper.toResponseDto(saved);
+    }
 
+    public OrderResponseDTO annulerOrder(Long id){
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Ordre de production non trouvé avec id: " + id));
+        if(order.getStatus()!= OrderStatus.LIVREE && order.getStatus()!= OrderStatus.EN_ROUTE){
+            throw new BusinessException(
+                    "Impossible de bloquer l'ordre " + id + ". Son statut actuel est: " + order.getStatus() +
+                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
+            );
+        }
+        order.setStatus(OrderStatus.ANNULEE);
+        Order updated = orderRepository.save(order);
+        return orderMapper.toResponseDto(updated);
     }
 }
