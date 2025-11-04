@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_production.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_production.dto.productionOrder.ProductionOrderRequestDTO;
 import com.example.supplychainx.service_production.dto.productionOrder.ProductionOrderResponseDTO;
 import com.example.supplychainx.service_production.service.ProductionOrderService;
@@ -47,6 +48,7 @@ public class ProductionOrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
     @GetMapping("/{id}/estimated-time")
     public ResponseEntity<Long> getEstimatedProductionTime(@PathVariable Long id) {
         Long estimatedTime = productionOrderService.getEstimatedProductionTime(id);

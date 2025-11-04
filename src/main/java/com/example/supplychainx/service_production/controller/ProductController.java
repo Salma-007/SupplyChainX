@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_production.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_production.dto.product.ProductRequestDTO;
 import com.example.supplychainx.service_production.dto.product.ProductResponseDTO;
 import com.example.supplychainx.service_production.service.ProductService;
@@ -30,6 +31,7 @@ public class ProductController {
         return ResponseEntity.ok(productPage);
     }
 
+    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
         ProductResponseDTO response = productService.getProductById(id);
