@@ -3,11 +3,12 @@ package com.example.supplychainx.service_delivery.mapper;
 import com.example.supplychainx.service_delivery.dto.order.OrderRequestDTO;
 import com.example.supplychainx.service_delivery.dto.order.OrderResponseDTO;
 import com.example.supplychainx.service_delivery.model.Order;
+import com.example.supplychainx.service_production.mapper.ProductMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProductMapper.class, CustomerMapper.class})
 public interface OrderMapper {
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "product.name", target = "productName")
