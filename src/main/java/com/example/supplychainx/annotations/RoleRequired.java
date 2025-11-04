@@ -3,10 +3,8 @@ package com.example.supplychainx.annotations;
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 public @interface RoleRequired {
-    /**
-     * Spécifie la liste des rôles autorisés à exécuter cette méthode.
-     */
+    // les roles dédiés pour la methode ou pour le controlleur
     String[] value();
 }

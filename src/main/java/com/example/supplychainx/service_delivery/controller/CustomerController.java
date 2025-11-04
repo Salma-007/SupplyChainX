@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_delivery.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_delivery.dto.customer.CustomerRequestDTO;
 import com.example.supplychainx.service_delivery.dto.customer.CustomerResponseDTO;
 import com.example.supplychainx.service_delivery.service.CustomerService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
+@RoleRequired({"GESTIONNAIRE_COMMERCIAL"})
 public class CustomerController {
 
     private final CustomerService customerService;

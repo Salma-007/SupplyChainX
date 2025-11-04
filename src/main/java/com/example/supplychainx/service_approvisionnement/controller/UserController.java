@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_approvisionnement.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_approvisionnement.dto.User.UserRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.User.UserResponseDTO;
 import com.example.supplychainx.service_approvisionnement.service.UserService;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@RoleRequired({"ADMIN"})
 public class UserController {
     private final UserService userService;
 

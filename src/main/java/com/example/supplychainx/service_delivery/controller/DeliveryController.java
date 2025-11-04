@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_delivery.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_delivery.dto.delivery.DeliveryRequestDTO;
 import com.example.supplychainx.service_delivery.dto.delivery.DeliveryResponseDTO;
 import com.example.supplychainx.service_delivery.service.DeliveryService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/deliveries")
 @RequiredArgsConstructor
+@RoleRequired({"SUPERVISEUR_LIVRAISONS"})
 public class DeliveryController {
     private final DeliveryService deliveryService;
 

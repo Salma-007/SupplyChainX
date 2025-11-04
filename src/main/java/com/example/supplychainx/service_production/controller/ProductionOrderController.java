@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/production-orders")
 @RequiredArgsConstructor
+@RoleRequired({"CHEF_PRODUCTION"})
 public class ProductionOrderController {
     private final ProductionOrderService productionOrderService;
 
@@ -24,6 +25,7 @@ public class ProductionOrderController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @RoleRequired({"CHEF_PRODUCTION", "SUPERVISEUR_PRODUCTION"})
     @GetMapping
     public ResponseEntity<Page<ProductionOrderResponseDTO>> getAllProductionOrders(Pageable pageable) {
         Page<ProductionOrderResponseDTO> orderPage = productionOrderService.getAllProductionOrders(pageable);
@@ -48,7 +50,7 @@ public class ProductionOrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
+    @RoleRequired({"PLANIFICATEUR"})
     @GetMapping("/{id}/estimated-time")
     public ResponseEntity<Long> getEstimatedProductionTime(@PathVariable Long id) {
         Long estimatedTime = productionOrderService.getEstimatedProductionTime(id);

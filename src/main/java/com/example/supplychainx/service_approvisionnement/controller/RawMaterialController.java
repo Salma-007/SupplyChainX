@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/raw-materials")
+@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
 public class RawMaterialController {
 
     private final RawMaterialService rawMaterialService;
@@ -19,7 +20,6 @@ public class RawMaterialController {
         this.rawMaterialService = rawMaterialService;
     }
 
-    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
     @PostMapping
     public ResponseEntity<RawMaterialResponseDTO> create(@RequestBody RawMaterialRequestDTO dto) {
         return ResponseEntity.ok(rawMaterialService.createMaterial(dto));
@@ -30,6 +30,7 @@ public class RawMaterialController {
         return ResponseEntity.ok(rawMaterialService.getMaterialById(id));
     }
 
+    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","SUPERVISEUR_LOGISTIQUE"})
     @GetMapping
     public ResponseEntity<List<RawMaterialResponseDTO>> getAll() {
         return ResponseEntity.ok(rawMaterialService.getAllMaterials());

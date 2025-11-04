@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
+@RoleRequired({"CHEF_PRODUCTION"})
 public class ProductController {
     private final ProductService productService;
 
@@ -31,7 +32,6 @@ public class ProductController {
         return ResponseEntity.ok(productPage);
     }
 
-    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
         ProductResponseDTO response = productService.getProductById(id);

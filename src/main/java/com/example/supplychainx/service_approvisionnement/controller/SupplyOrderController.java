@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_approvisionnement.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderResponseDTO;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/supply-orders")
 @RequiredArgsConstructor
+@RoleRequired({"RESPONSABLE_ACHATS"})
 public class SupplyOrderController {
     private final SupplyOrderService supplyOrderService;
     private final SupplyOrderMapper orderMapper;
@@ -42,6 +44,7 @@ public class SupplyOrderController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    @RoleRequired({"RESPONSABLE_ACHATS","SUPERVISEUR_LOGISTIQUE"})
     @GetMapping
     public ResponseEntity<List<SupplyOrderResponseDTO>> getAllOrders() {
 

@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_delivery.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_delivery.dto.order.OrderRequestDTO;
 import com.example.supplychainx.service_delivery.dto.order.OrderResponseDTO;
 import com.example.supplychainx.service_delivery.service.OrderService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
+@RoleRequired({"GESTIONNAIRE_COMMERCIAL"})
 public class OrderController {
     private final OrderService orderService;
 
@@ -23,6 +25,7 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @RoleRequired({"GESTIONNAIRE_COMMERCIAL","SUPERVISEUR_LIVRAISONS"})
     @GetMapping
     public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
         List<OrderResponseDTO> orders = orderService.getAllOrders();

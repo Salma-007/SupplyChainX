@@ -1,6 +1,7 @@
 package com.example.supplychainx.service_approvisionnement.controller;
 
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_approvisionnement.dto.Supplier.SupplierRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.Supplier.SupplierResponseDTO;
 import com.example.supplychainx.service_approvisionnement.service.SupplierService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/suppliers")
 @RequiredArgsConstructor
+@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
 public class SupplierController {
 
     private final SupplierService supplierService;
