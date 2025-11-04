@@ -1,5 +1,6 @@
 package com.example.supplychainx.service_approvisionnement.controller;
 
+import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;
 import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
@@ -18,6 +19,7 @@ public class RawMaterialController {
         this.rawMaterialService = rawMaterialService;
     }
 
+    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
     @PostMapping
     public ResponseEntity<RawMaterialResponseDTO> create(@RequestBody RawMaterialRequestDTO dto) {
         return ResponseEntity.ok(rawMaterialService.createMaterial(dto));

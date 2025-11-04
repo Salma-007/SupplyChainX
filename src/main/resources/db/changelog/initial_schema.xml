@@ -1,0 +1,245 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Youcode (generated)" id="1762249890104-1">
+        <createTable tableName="customer_order">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="customer_order_pkey"/>
+            </column>
+            <column name="quantity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="product_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-2">
+        <createTable tableName="delivery">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="delivery_pkey"/>
+            </column>
+            <column name="cost" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="driver" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vehicule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-3">
+        <createTable tableName="production_order">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="production_order_pkey"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-4">
+        <createTable tableName="supply_order">
+            <column name="orderdate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="supply_order_pkey"/>
+            </column>
+            <column name="supplier_id" type="BIGINT"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-5">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-6">
+        <addUniqueConstraint columnNames="order_id" constraintName="uk3bdrbd2jcybaaa5rxkj4s7vlk" tableName="delivery"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-7">
+        <addUniqueConstraint columnNames="email" constraintName="users_email_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-8">
+        <createTable tableName="bill_of_material">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="bill_of_material_pkey"/>
+            </column>
+            <column name="quantity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="BIGINT"/>
+            <column name="material_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-9">
+        <createTable tableName="customer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="customer_pkey"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-10">
+        <createTable tableName="product">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="product_pkey"/>
+            </column>
+            <column name="cost" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="production_time" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-11">
+        <createTable tableName="raw_material">
+            <column name="stock" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock_min" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="raw_material_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-12">
+        <createTable tableName="supplier">
+            <column name="lead_time" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="supplier_pkey"/>
+            </column>
+            <column name="contact" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-13">
+        <createTable tableName="supplier_rawmaterial">
+            <column name="rawmaterial_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="supplier_rawmaterial_pkey"/>
+            </column>
+            <column name="supplier_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="supplier_rawmaterial_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-14">
+        <createTable tableName="supply_order_item">
+            <column name="quantity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="supply_order_item_pkey"/>
+            </column>
+            <column name="material_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="supply_order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-15">
+        <addForeignKeyConstraint baseColumnNames="supplier_id" baseTableName="supplier_rawmaterial" constraintName="fka1op2oq2gkuegitpjrb1dq1m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="supplier" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-16">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="supply_order_item" constraintName="fkam4tdmpi11f8i3v2b7jpou06y" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="raw_material" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-17">
+        <addForeignKeyConstraint baseColumnNames="supply_order_id" baseTableName="supply_order_item" constraintName="fkblu21960wpuoktwjnplsehd88" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="supply_order" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-18">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="bill_of_material" constraintName="fkdildw5cr0jshwl1aapiigmaox" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="raw_material" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-19">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="delivery" constraintName="fkejhj32q2h5614nx7scc41chql" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="customer_order" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-20">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="customer_order" constraintName="fkf9abd30bhiqvugayxlpq8ryq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="customer" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-21">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="bill_of_material" constraintName="fkh3mapit7kch8jgnqhnmikdi96" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="product" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-22">
+        <addForeignKeyConstraint baseColumnNames="supplier_id" baseTableName="supply_order" constraintName="fkhu1dkipx6f8w155arxs8uncv8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="supplier" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-23">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="production_order" constraintName="fkkc38iyv9ioqhjwcdlrmfpecq3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="product" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-24">
+        <addForeignKeyConstraint baseColumnNames="rawmaterial_id" baseTableName="supplier_rawmaterial" constraintName="fkmaapu5kf0vvskvcgffrjo9ilm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="raw_material" validate="true"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1762249890104-25">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="customer_order" constraintName="fkqodal2jjysnj6lsn46nvndcwr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="product" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
