@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/raw-materials")
-@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT"})
+@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","ADMIN"})
 public class RawMaterialController {
 
     private final RawMaterialService rawMaterialService;

@@ -4,6 +4,7 @@ import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.Supply
 import com.example.supplychainx.service_approvisionnement.exceptions.*;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderItemMapper;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
+import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrder;
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrderItem;
 import com.example.supplychainx.service_approvisionnement.model.enums.SupplyOrderStatus;
@@ -72,8 +73,21 @@ public class SupplyOrderService {
             throw new InvalidOrderStatusException("Le statut fourni est invalide: " + newStatusString);
         }
 
-        if (order.getStatus() == SupplyOrderStatus.RECUE) {
-            throw new OrderIsReceivedException("Impossible de modifier le statut d'une commande déjà annulée.");
+        if (newStatus == SupplyOrderStatus.RECUE && order.getStatus() != SupplyOrderStatus.RECUE) {
+
+            for (SupplyOrderItem item : order.getOrderItems()) {
+                RawMaterial rawMaterial = item.getRawMaterial();
+
+                int currentStock = rawMaterial.getStock();
+                int receivedQuantity = item.getQuantity();
+
+                rawMaterial.setStock(currentStock + receivedQuantity);
+
+                rawMaterialRepository.save(rawMaterial);
+            }
+        }
+        if (order.getStatus() == SupplyOrderStatus.RECUE && newStatus != SupplyOrderStatus.RECUE) {
+            throw new OrderIsReceivedException("Impossible de modifier le statut d'une commande déjà reçue vers un autre statut.");
         }
 
         order.setStatus(newStatus);
