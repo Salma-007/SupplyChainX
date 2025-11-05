@@ -7,6 +7,7 @@ import com.example.supplychainx.service_delivery.exceptions.OrderNotFoundExcepti
 import com.example.supplychainx.service_delivery.mapper.DeliveryMapper;
 import com.example.supplychainx.service_delivery.model.Delivery;
 import com.example.supplychainx.service_delivery.model.Order;
+import com.example.supplychainx.service_delivery.model.enums.DeliveryStatus;
 import com.example.supplychainx.service_delivery.repository.DeliveryRepository;
 import com.example.supplychainx.service_delivery.repository.OrderRepository;
 import jakarta.transaction.Transactional;
@@ -33,9 +34,14 @@ public class DeliveryService {
 
         Delivery delivery = deliveryMapper.toEntity(dto);
         delivery.setOrder(order);
+        delivery.setStatus(DeliveryStatus.PLANIFIEE);
+
 
         Delivery saved = deliveryRepository.save(delivery);
-        return deliveryMapper.toResponseDto(saved);
+        double totalCost = (saved.getOrder().getProduct().getCost() * saved.getOrder().getQuantity())+saved.getCost();
+        DeliveryResponseDTO responseDTO = deliveryMapper.toResponseDto(saved);
+        responseDTO.setTotalCost(totalCost);
+        return responseDTO;
     }
 
     public Page<DeliveryResponseDTO> getAllDeliveries(Pageable pageable) {

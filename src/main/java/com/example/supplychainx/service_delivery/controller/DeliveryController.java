@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/deliveries")
 @RequiredArgsConstructor
-@RoleRequired({"SUPERVISEUR_LIVRAISONS"})
+@RoleRequired({"SUPERVISEUR_LIVRAISONS","ADMIN"})
 public class DeliveryController {
     private final DeliveryService deliveryService;
 

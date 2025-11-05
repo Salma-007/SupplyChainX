@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/production-orders")
 @RequiredArgsConstructor
-@RoleRequired({"CHEF_PRODUCTION"})
+@RoleRequired({"CHEF_PRODUCTION", "ADMIN"})
 public class ProductionOrderController {
     private final ProductionOrderService productionOrderService;
 

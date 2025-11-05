@@ -16,4 +16,6 @@ public class DeliveryResponseDTO {
     private String driver;
     private LocalDate deliveryDate;
     private Double cost;
+
+    private Double totalCost;
 }

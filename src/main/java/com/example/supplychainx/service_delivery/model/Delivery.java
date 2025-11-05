@@ -33,5 +33,4 @@ public class Delivery {
 
     @Column(nullable = false)
     private Double cost;
-
 }
