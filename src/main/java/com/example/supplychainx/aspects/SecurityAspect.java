@@ -29,10 +29,10 @@ public class SecurityAspect {
         List<String> requiredRoles = Arrays.asList(roleRequired.value());
 
         if (requiredRoles.contains(currentUserRole)) {
-            System.out.println("✅ OK: Rôle " + currentUserRole + " autorisé pour la méthode " + method.getName());
+            System.out.println(" OK: Rôle " + currentUserRole + " autorisé pour la méthode " + method.getName());
             return joinPoint.proceed();
         } else {
-            System.err.println("❌ REFUSÉ: Rôle " + currentUserRole + " non autorisé. Rôles requis: " + requiredRoles);
+            System.err.println(" REFUSÉ: Rôle " + currentUserRole + " non autorisé. Rôles requis: " + requiredRoles);
             throw new SecurityException("Accès refusé. Rôle insuffisant pour exécuter cette action.");
         }
     }

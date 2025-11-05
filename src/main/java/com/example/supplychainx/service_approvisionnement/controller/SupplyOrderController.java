@@ -5,6 +5,7 @@ import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.Supply
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderResponseDTO;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrder;
+import com.example.supplychainx.service_approvisionnement.model.enums.SupplyOrderStatus;
 import com.example.supplychainx.service_approvisionnement.service.SupplyOrderService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -44,7 +45,7 @@ public class SupplyOrderController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @RoleRequired({"RESPONSABLE_ACHATS","SUPERVISEUR_LOGISTIQUE"})
+    @RoleRequired({"RESPONSABLE_ACHATS","SUPERVISEUR_LOGISTIQUE","ADMIN"})
     @GetMapping
     public ResponseEntity<List<SupplyOrderResponseDTO>> getAllOrders() {
 
@@ -62,4 +63,10 @@ public class SupplyOrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}/update-status")
+    public ResponseEntity<SupplyOrderResponseDTO> changeStatus(@PathVariable Long id, @RequestParam("status") String status){
+        SupplyOrder order = supplyOrderService.updateOrderStatus(id,status);
+        SupplyOrderResponseDTO responseDTO = orderMapper.toResponseDto(order);
+        return ResponseEntity.ok(responseDTO);
+    }
 }

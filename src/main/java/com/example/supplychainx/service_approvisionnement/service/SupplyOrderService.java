@@ -1,11 +1,7 @@
 package com.example.supplychainx.service_approvisionnement.service;
 
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderRequestDTO;
-import com.example.supplychainx.service_approvisionnement.exceptions.OrderIsReceivedException;
-import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
-import com.example.supplychainx.service_approvisionnement.exceptions.SupplierNotFoundException;
-import com.example.supplychainx.service_approvisionnement.exceptions.SupplyOrderNotFoundException;
-import com.example.supplychainx.service_approvisionnement.mapper.SupplierMapper;
+import com.example.supplychainx.service_approvisionnement.exceptions.*;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderItemMapper;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrder;
@@ -65,9 +61,16 @@ public class SupplyOrderService {
     }
 
     @Transactional
-    public SupplyOrder updateOrderStatus(Long orderId, SupplyOrderStatus newStatus) {
+    public SupplyOrder updateOrderStatus(Long orderId, String newStatusString) {
         SupplyOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new SupplyOrderNotFoundException("Commande non trouvée avec l'ID: " + orderId));
+
+        SupplyOrderStatus newStatus;
+        try {
+            newStatus = SupplyOrderStatus.valueOf(newStatusString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidOrderStatusException("Le statut fourni est invalide: " + newStatusString);
+        }
 
         if (order.getStatus() == SupplyOrderStatus.RECUE) {
             throw new OrderIsReceivedException("Impossible de modifier le statut d'une commande déjà annulée.");

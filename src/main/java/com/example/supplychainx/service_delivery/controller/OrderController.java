@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-@RoleRequired({"GESTIONNAIRE_COMMERCIAL"})
+@RoleRequired({"GESTIONNAIRE_COMMERCIAL","ADMIN"})
 public class OrderController {
     private final OrderService orderService;
 
@@ -55,6 +55,13 @@ public class OrderController {
     @PatchMapping("/{id}/cancel")
     public ResponseEntity<OrderResponseDTO> cancelDeliveryOrder(@PathVariable Long id){
         OrderResponseDTO response = orderService.annulerOrder(id);
+        return ResponseEntity.ok(response);
+    }
+
+    // modifier statut d'un ordre
+    @GetMapping("/{id}/update-status")
+    public ResponseEntity<OrderResponseDTO> changeStatus(@PathVariable Long id, @RequestParam("status") String status) {
+        OrderResponseDTO response = orderService.updateStatus(id, status);
         return ResponseEntity.ok(response);
     }
 }

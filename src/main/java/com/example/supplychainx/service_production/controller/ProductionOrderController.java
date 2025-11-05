@@ -63,4 +63,10 @@ public class ProductionOrderController {
         ProductionOrderResponseDTO response = productionOrderService.blockProductionOrder(id);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}/update-status")
+    public ResponseEntity<ProductionOrderResponseDTO> getEstimatedProductionTime(@PathVariable Long id, @RequestParam("status") String status) {
+        ProductionOrderResponseDTO response = productionOrderService.updateStatus(id, status);
+        return ResponseEntity.ok(response);
+    }
 }

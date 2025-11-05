@@ -1,6 +1,7 @@
 package com.example.supplychainx.service_production.service;
 
 import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
+import com.example.supplychainx.service_approvisionnement.exceptions.InvalidOrderStatusException;
 import com.example.supplychainx.service_production.dto.productionOrder.ProductionOrderRequestDTO;
 import com.example.supplychainx.service_production.dto.productionOrder.ProductionOrderResponseDTO;
 import com.example.supplychainx.service_production.exceptions.ProductNotFoundException;
@@ -103,6 +104,28 @@ public class ProductionOrderService {
             );
         }
         order.setStatus(ProductionOrderStatus.BLOQUE);
+        ProductionOrder updated = productionOrderRepository.save(order);
+        return productionOrderMapper.toResponseDto(updated);
+    }
+
+    public ProductionOrderResponseDTO updateStatus(Long id, String newStatus){
+        ProductionOrder order = productionOrderRepository.findById(id)
+                .orElseThrow(() -> new ProductionOrderNotFoundException("Ordre de production non trouvé avec id: " + id));
+
+        ProductionOrderStatus status;
+        try{
+            status = ProductionOrderStatus.valueOf(newStatus);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidOrderStatusException("Le statut fourni est invalide: " + newStatus);
+        }
+
+        if (order.getStatus() != ProductionOrderStatus.TERMINE) {
+            throw new BusinessException(
+                    "Impossible de bloquer l'ordre de production " + id + ". Son statut actuel est: " + order.getStatus() +
+                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
+            );
+        }
+        order.setStatus(status);
         ProductionOrder updated = productionOrderRepository.save(order);
         return productionOrderMapper.toResponseDto(updated);
     }

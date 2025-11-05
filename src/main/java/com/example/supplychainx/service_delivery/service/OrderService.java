@@ -1,6 +1,7 @@
 package com.example.supplychainx.service_delivery.service;
 
 import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
+import com.example.supplychainx.service_approvisionnement.exceptions.InvalidOrderStatusException;
 import com.example.supplychainx.service_delivery.dto.order.OrderRequestDTO;
 import com.example.supplychainx.service_delivery.dto.order.OrderResponseDTO;
 import com.example.supplychainx.service_delivery.exceptions.CustomerNotFoundException;
@@ -88,6 +89,25 @@ public class OrderService {
             );
         }
         order.setStatus(OrderStatus.ANNULEE);
+        Order updated = orderRepository.save(order);
+        return orderMapper.toResponseDto(updated);
+    }
+
+    public OrderResponseDTO updateStatus(Long id, String status){
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Ordre de production non trouvé avec id: " + id));
+        OrderStatus newStatus;
+        try{
+            newStatus = OrderStatus.valueOf(status);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidOrderStatusException("Le statut fourni est invalide: " + status);
+        }
+        if(order.getStatus()!= OrderStatus.LIVREE){
+            throw new BusinessException(
+                    "Impossible de bloquer l'ordre " + id + ". Son statut actuel est: " + order.getStatus() +
+                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
+            );
+        }
+        order.setStatus(newStatus);
         Order updated = orderRepository.save(order);
         return orderMapper.toResponseDto(updated);
     }

@@ -18,7 +18,6 @@ public class AuthAspect {
     @Autowired
     private UserRepository userRepository;
 
-
     @Around("execution(public * com.example.supplychainx.service_approvisionnement.controller.*.*(..)) || " +
             "execution(public * com.example.supplychainx.service_production.controller.*.*(..)) || "+
             "execution(public * com.example.supplychainx.service_delivery.controller.*.*(..))"
