@@ -3,7 +3,6 @@ package com.example.supplychainx.service_approvisionnement.controller;
 import com.example.supplychainx.annotations.RoleRequired;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;
-import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.service.RawMaterialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class RawMaterialController {
         return ResponseEntity.ok(rawMaterialService.getMaterialById(id));
     }
 
-    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","SUPERVISEUR_LOGISTIQUE"})
+    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","SUPERVISEUR_LOGISTIQUE", "ADMIN"})
     @GetMapping
     public ResponseEntity<List<RawMaterialResponseDTO>> getAll() {
         return ResponseEntity.ok(rawMaterialService.getAllMaterials());

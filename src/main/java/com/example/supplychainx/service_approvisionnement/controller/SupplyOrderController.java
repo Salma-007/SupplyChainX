@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/supply-orders")
 @RequiredArgsConstructor
-@RoleRequired({"RESPONSABLE_ACHATS"})
+@RoleRequired({"RESPONSABLE_ACHATS", "ADMIN"})
 public class SupplyOrderController {
     private final SupplyOrderService supplyOrderService;
     private final SupplyOrderMapper orderMapper;

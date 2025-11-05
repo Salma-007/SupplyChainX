@@ -119,12 +119,22 @@ public class ProductionOrderService {
             throw new InvalidOrderStatusException("Le statut fourni est invalide: " + newStatus);
         }
 
-        if (order.getStatus() != ProductionOrderStatus.TERMINE) {
+        if (order.getStatus() == ProductionOrderStatus.TERMINE && status == ProductionOrderStatus.TERMINE) {
             throw new BusinessException(
                     "Impossible de bloquer l'ordre de production " + id + ". Son statut actuel est: " + order.getStatus() +
                             ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
             );
         }
+
+        if(status == ProductionOrderStatus.TERMINE ){
+            Product product = order.getProduct();
+            int current = product.getStock();
+            int ordered = order.getQuantity();
+            product.setStock(current + ordered);
+
+            productRepository.save(product);
+        }
+
         order.setStatus(status);
         ProductionOrder updated = productionOrderRepository.save(order);
         return productionOrderMapper.toResponseDto(updated);

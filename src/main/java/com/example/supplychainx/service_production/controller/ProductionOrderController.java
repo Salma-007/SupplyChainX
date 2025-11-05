@@ -25,7 +25,7 @@ public class ProductionOrderController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @RoleRequired({"CHEF_PRODUCTION", "SUPERVISEUR_PRODUCTION"})
+    @RoleRequired({"CHEF_PRODUCTION", "SUPERVISEUR_PRODUCTION", "ADMIN"})
     @GetMapping
     public ResponseEntity<Page<ProductionOrderResponseDTO>> getAllProductionOrders(Pageable pageable) {
         Page<ProductionOrderResponseDTO> orderPage = productionOrderService.getAllProductionOrders(pageable);
@@ -50,7 +50,7 @@ public class ProductionOrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @RoleRequired({"PLANIFICATEUR"})
+    @RoleRequired({"PLANIFICATEUR", "ADMIN"})
     @GetMapping("/{id}/estimated-time")
     public ResponseEntity<Long> getEstimatedProductionTime(@PathVariable Long id) {
         Long estimatedTime = productionOrderService.getEstimatedProductionTime(id);
