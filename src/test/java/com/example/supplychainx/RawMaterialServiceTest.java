@@ -134,47 +134,6 @@ public class RawMaterialServiceTest {
     }
 
 
-//    @Test
-//    void updateMaterial_shouldReturnUpdatedResponseDTO_whenFound() {
-//        // GIVEN
-//        RawMaterialRequestDTO updateDTO = new RawMaterialRequestDTO(
-//                "Acier Inoxydable V2",
-//                150.0,
-//                "kg",
-//                30.0,
-//                listLong
-//        );
-//        RawMaterial updatedRawMaterial = new RawMaterial();
-//        updatedRawMaterial.setId(MATERIAL_ID);
-//        updatedRawMaterial.setName("Acier Inoxydable V2");
-//        updatedRawMaterial.setStock(150);
-//        updatedRawMaterial.setUnit("kg");
-//        updatedRawMaterial.setStockMin(30);
-//        RawMaterialResponseDTO updatedResponseDTO = new RawMaterialResponseDTO(
-//                MATERIAL_ID,
-//                "Acier Inoxydable V2",
-//                150.0,
-//                "kg",
-//                30.0,
-//                list
-//        );
-//
-//        when(rawMaterialRepository.findById(MATERIAL_ID)).thenReturn(Optional.of(rawMaterial));
-//        when(rawMaterialRepository.save(any(RawMaterial.class))).thenReturn(updatedRawMaterial);
-//        when(rawMaterialMapper.toResponseDto(updatedRawMaterial)).thenReturn(updatedResponseDTO);
-//
-//        // WHEN
-//        RawMaterialResponseDTO result = rawMaterialService.updateMaterial(MATERIAL_ID, updateDTO);
-//
-//        // THEN
-//        assertNotNull(result);
-//        assertEquals("Acier Inoxydable V2", result.getName());
-//        assertEquals(150.0, result.getStock());
-//        // Vérifie que les setters ont été appelés sur l'entité existante
-//        assertEquals("Acier Inoxydable V2", rawMaterial.getName());
-//        verify(rawMaterialRepository, times(1)).save(rawMaterial);
-//    }
-
     @Test
     void updateMaterial_shouldThrowException_whenNotFound() {
         // GIVEN

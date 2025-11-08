@@ -13,4 +13,9 @@ public class BillOfMaterialRequestDTO {
     @NotNull(message = "La quantité est obligatoire.")
     @Min(value = 1, message = "La quantité doit être supérieure à zéro.")
     private Integer quantity;
+
+    public BillOfMaterialRequestDTO(Long rawMaterialId, Integer v) {
+        this.rawMaterialId = rawMaterialId;
+        this.quantity = v;
+    }
 }
