@@ -5,7 +5,6 @@ import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.Supply
 import com.example.supplychainx.service_approvisionnement.dto.SupplyOrder.SupplyOrderResponseDTO;
 import com.example.supplychainx.service_approvisionnement.mapper.SupplyOrderMapper;
 import com.example.supplychainx.service_approvisionnement.model.SupplyOrder;
-import com.example.supplychainx.service_approvisionnement.model.enums.SupplyOrderStatus;
 import com.example.supplychainx.service_approvisionnement.service.SupplyOrderService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;

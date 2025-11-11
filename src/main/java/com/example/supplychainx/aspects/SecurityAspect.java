@@ -1,7 +1,6 @@
 package com.example.supplychainx.aspects;
 
 import com.example.supplychainx.annotations.RoleRequired;
-import com.example.supplychainx.aspects.AuthContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
