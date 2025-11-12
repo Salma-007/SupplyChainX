@@ -69,7 +69,7 @@ Chaque utilisateur possède un **rôle unique** déterminant ses permissions :
 ### ▶️ Exécution
 ```bash
 # Cloner le projet
-git clone https://github.com/username/supplychainx.git
+git clone https://github.com/Salma-007/SupplyChainX
 cd supplychainx
 
 # Construire et exécuter
