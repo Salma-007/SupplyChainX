@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/supplyx
+    username: supplyx
+    password: supplyx
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  logging:
+    level:
+      root: DEBUG
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    com.example.supplychainx: DEBUG
+  file:
+    name: logs/dev.log

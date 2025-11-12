@@ -3,11 +3,15 @@ package com.example.supplychainx.service_delivery.dto.delivery;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryRequestDTO {
     @NotNull(message = "L'ID de la commande est obligatoire.")
     private Long orderId;

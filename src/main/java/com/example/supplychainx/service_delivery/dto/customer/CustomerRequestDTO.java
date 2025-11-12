@@ -1,8 +1,10 @@
 package com.example.supplychainx.service_delivery.dto.customer;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 @Data
 public class CustomerRequestDTO {
     @NotBlank(message = "Le nom du client est obligatoire.")

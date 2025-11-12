@@ -1,6 +1,5 @@
-package com.example.supplychainx;
+package com.example.supplychainx.test_production;
 import com.example.supplychainx.service_approvisionnement.exceptions.BusinessException;
-import com.example.supplychainx.service_approvisionnement.exceptions.RawMaterialNotFoundException;
 import com.example.supplychainx.service_approvisionnement.model.RawMaterial;
 import com.example.supplychainx.service_approvisionnement.repository.RawMaterialRepository;
 import com.example.supplychainx.service_production.dto.billOfMaterial.BillOfMaterialRequestDTO;
@@ -23,7 +22,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

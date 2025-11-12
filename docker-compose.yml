@@ -31,6 +31,11 @@ services:
       - "5433:5432"
     networks:
       - supplyxnet
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U supplyx" ] # Commande pour vérifier l'état
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # sonarcube
   sonarqube:

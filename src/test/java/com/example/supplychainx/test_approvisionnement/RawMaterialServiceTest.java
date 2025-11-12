@@ -1,4 +1,4 @@
-package com.example.supplychainx;
+package com.example.supplychainx.test_approvisionnement;
 
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialRequestDTO;
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;

@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db:5432/supplyx
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  logging:
+    level:
+      root: WARN
+server:
+  port: 8080
+
+logging:
+  level:
+    root: WARN
+  file:
+    name: /var/log/supplychainx/app.log
+

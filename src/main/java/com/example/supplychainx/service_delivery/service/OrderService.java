@@ -13,15 +13,18 @@ import com.example.supplychainx.service_delivery.model.enums.DeliveryStatus;
 import com.example.supplychainx.service_delivery.model.enums.OrderStatus;
 import com.example.supplychainx.service_delivery.repository.CustomerRepository;
 import com.example.supplychainx.service_delivery.repository.OrderRepository;
+import com.example.supplychainx.service_production.dto.product.ProductResponseDTO;
 import com.example.supplychainx.service_production.exceptions.ProductNotFoundException;
 import com.example.supplychainx.service_production.model.Product;
 import com.example.supplychainx.service_production.model.enums.ProductionOrderStatus;
 import com.example.supplychainx.service_production.repository.ProductRepository;
+import com.example.supplychainx.service_production.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final ProductRepository productRepository;
+    private final ProductService productService;
     private final CustomerRepository customerRepository;
 
     public OrderResponseDTO createOrder(OrderRequestDTO dto){
@@ -82,17 +86,17 @@ public class OrderService {
 
     public OrderResponseDTO annulerOrder(Long id){
         Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Ordre de production non trouvé avec id: " + id));
-        if(order.getStatus()!= OrderStatus.LIVREE && order.getStatus()!= OrderStatus.EN_ROUTE){
+        if(order.getStatus() == OrderStatus.LIVREE || order.getStatus() == OrderStatus.EN_ROUTE){
             throw new BusinessException(
                     "Impossible de bloquer l'ordre " + id + ". Son statut actuel est: " + order.getStatus() +
-                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
+                            ". Le blocage n'est autorisé que pour le statut " + OrderStatus.EN_PREPARATION
             );
         }
         order.setStatus(OrderStatus.ANNULEE);
         Order updated = orderRepository.save(order);
         return orderMapper.toResponseDto(updated);
     }
-
+    @Transactional
     public OrderResponseDTO updateStatus(Long id, String status){
         Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Ordre de production non trouvé avec id: " + id));
         OrderStatus newStatus;
@@ -101,7 +105,7 @@ public class OrderService {
         } catch (IllegalArgumentException e) {
             throw new InvalidOrderStatusException("Le statut fourni est invalide: " + status);
         }
-        if(order.getStatus()!= OrderStatus.LIVREE){
+        if(order.getStatus() == OrderStatus.LIVREE){
             throw new BusinessException(
                     "Impossible de bloquer l'ordre " + id + ". Son statut actuel est: " + order.getStatus() +
                             ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
@@ -109,6 +113,16 @@ public class OrderService {
         }
         order.setStatus(newStatus);
         Order updated = orderRepository.save(order);
+//        ProductResponseDTO product = productService.getProductById(order.getProduct().getId());
+//        int stock = product.getStock();
+//        int new_stock = stock - order.getQuantity();
+//        product.setStock(new_stock);
+//        productService.
+        Optional<Product> byId = productRepository.findById(order.getProduct().getId());
+        Product product = byId.get();
+        int stock = product.getStock();
+        int new_stock = stock - order.getQuantity();
+        product.setStock(new_stock);
         return orderMapper.toResponseDto(updated);
     }
 }
