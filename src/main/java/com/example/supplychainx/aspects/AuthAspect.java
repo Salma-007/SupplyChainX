@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Aspect
 @Component
@@ -17,6 +19,8 @@ public class AuthAspect {
 
     @Autowired
     private UserRepository userRepository;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthAspect.class);
 
     @Around("execution(public * com.example.supplychainx.service_approvisionnement.controller.*.*(..)) || " +
             "execution(public * com.example.supplychainx.service_production.controller.*.*(..)) || "+
@@ -32,7 +36,7 @@ public class AuthAspect {
 
             AuthContext.setRole(determinedRole);
 
-            System.out.println("Authentification réussie. Rôle stocké dans AuthContext: " + determinedRole);
+            LOGGER.info("Authentification réussie. Rôle stocké dans AuthContext: {}", determinedRole);
 
             return joinPoint.proceed();
 

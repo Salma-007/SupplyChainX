@@ -4,12 +4,16 @@ import com.example.supplychainx.service_approvisionnement.dto.SupplyOrderItem.Su
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SupplyOrderRequestDTO {
     @NotNull(message = "L'ID du fournisseur est requis.")
     private Long supplierId;

@@ -4,11 +4,15 @@ import com.example.supplychainx.service_production.model.enums.ProductionOrderSt
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductionOrderRequestDTO {
     @NotNull(message = "La quantité est requise.")
     @Min(value = 1, message = "La quantité doit être supérieure à zéro.")

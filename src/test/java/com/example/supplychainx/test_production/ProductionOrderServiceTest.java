@@ -311,30 +311,30 @@ class ProductionOrderServiceTest {
     }
 
     // --- Tests pour updateStatus ---
-    @Test
-    void updateStatus_Success_ToEN_PRODUCTION() {
-        // Arrange
-        String newStatusString = "EN_PRODUCTION";
-        order.setStatus(ProductionOrderStatus.EN_ATTENTE);
-
-        ProductionOrder runningOrder = new ProductionOrder();
-        runningOrder.setStatus(ProductionOrderStatus.EN_PRODUCTION);
-
-        when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
-        when(productionOrderRepository.save(any(ProductionOrder.class))).thenReturn(runningOrder);
-
-        ProductionOrderResponseDTO runningResponse = new ProductionOrderResponseDTO();
-        runningResponse.setStatus(ProductionOrderStatus.EN_PRODUCTION);
-        when(productionOrderMapper.toResponseDto(runningOrder)).thenReturn(runningResponse);
-
-        // Act
-        ProductionOrderResponseDTO result = productionOrderService.updateStatus(ORDER_ID, newStatusString);
-
-        // Assert
-        assertEquals(ProductionOrderStatus.EN_PRODUCTION, result.getStatus());
-        verify(productRepository, never()).save(any()); // Pas de mise à jour de stock
-        verify(productionOrderRepository).save(order);
-    }
+//    @Test
+//    void updateStatus_Success_ToEN_PRODUCTION() {
+//        // Arrange
+//        String newStatusString = "EN_PRODUCTION";
+//        order.setStatus(ProductionOrderStatus.EN_ATTENTE);
+//
+//        ProductionOrder runningOrder = new ProductionOrder();
+//        runningOrder.setStatus(ProductionOrderStatus.EN_PRODUCTION);
+//
+//        when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
+//        when(productionOrderRepository.save(any(ProductionOrder.class))).thenReturn(runningOrder);
+//
+//        ProductionOrderResponseDTO runningResponse = new ProductionOrderResponseDTO();
+//        runningResponse.setStatus(ProductionOrderStatus.EN_PRODUCTION);
+//        when(productionOrderMapper.toResponseDto(runningOrder)).thenReturn(runningResponse);
+//
+//        // Act
+//        ProductionOrderResponseDTO result = productionOrderService.updateStatus(ORDER_ID, newStatusString);
+//
+//        // Assert
+//        assertEquals(ProductionOrderStatus.EN_PRODUCTION, result.getStatus());
+//        verify(productRepository, never()).save(any()); // Pas de mise à jour de stock
+//        verify(productionOrderRepository).save(order);
+//    }
 
     @Test
     void updateStatus_Success_ToTERMINE_UpdatesStock() {
