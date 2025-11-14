@@ -65,6 +65,7 @@ public class RawMaterialControllerIntegrationTest {
     @AfterEach
     void tearDown() {
         rawMaterialRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

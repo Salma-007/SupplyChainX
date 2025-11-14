@@ -913,3 +913,106 @@ java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceed
 2025-11-14T11:15:34.862+01:00  INFO 13940 --- [supplychainx] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-11-14T11:15:34.957+01:00  INFO 13940 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-11-14T11:15:34.969+01:00  INFO 13940 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-14T20:03:15.057+01:00  INFO 85532 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Starting RawMaterialControllerIntegrationTest using Java 17.0.16 with PID 85532 (started by Youcode in C:\Users\Youcode\Desktop\supplychainx)
+2025-11-14T20:03:15.059+01:00  INFO 85532 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : The following 1 profile is active: "test"
+2025-11-14T20:03:18.040+01:00  INFO 85532 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-14T20:03:18.275+01:00  INFO 85532 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 201 ms. Found 11 JPA repository interfaces.
+2025-11-14T20:03:19.708+01:00  INFO 85532 --- [supplychainx] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-14T20:03:19.844+01:00  INFO 85532 --- [supplychainx] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-14T20:03:19.925+01:00  INFO 85532 --- [supplychainx] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-14T20:03:20.758+01:00  INFO 85532 --- [supplychainx] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-14T20:03:20.856+01:00  INFO 85532 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-14T20:03:21.374+01:00  INFO 85532 --- [supplychainx] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@391aedcd
+2025-11-14T20:03:21.377+01:00  INFO 85532 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-14T20:03:21.474+01:00  WARN 85532 --- [supplychainx] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-14T20:03:21.527+01:00  INFO 85532 --- [supplychainx] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-14T20:03:24.772+01:00  INFO 85532 --- [supplychainx] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-14T20:03:24.979+01:00  INFO 85532 --- [supplychainx] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:03:25.899+01:00  INFO 85532 --- [supplychainx] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-14T20:03:28.840+01:00  WARN 85532 --- [supplychainx] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-14T20:03:30.339+01:00  INFO 85532 --- [supplychainx] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-14T20:03:30.340+01:00  INFO 85532 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-14T20:03:30.344+01:00  INFO 85532 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2025-11-14T20:03:30.441+01:00  INFO 85532 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Started RawMaterialControllerIntegrationTest in 16.34 seconds (process running for 24.826)
+2025-11-14T20:03:32.030+01:00  INFO 85532 --- [supplychainx] [main] c.e.supplychainx.aspects.AuthAspect      : Authentification réussie. Rôle stocké dans AuthContext: ADMIN
+2025-11-14T20:03:32.630+01:00  WARN 85532 --- [supplychainx] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2025-11-14T20:03:32.630+01:00 ERROR 85532 --- [supplychainx] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERREUR: la valeur d'une clé dupliquée rompt la contrainte unique « users_email_key »
+  Détail : La clé « (email)=(admin@supply.com) » existe déjà.
+2025-11-14T20:03:36.636+01:00  INFO 85532 --- [supplychainx] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:03:37.333+01:00  INFO 85532 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-14T20:03:37.340+01:00  INFO 85532 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-14T20:06:51.999+01:00  INFO 84924 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Starting RawMaterialControllerIntegrationTest using Java 24.0.1 with PID 84924 (started by Youcode in C:\Users\Youcode\Desktop\supplychainx)
+2025-11-14T20:06:52.001+01:00  INFO 84924 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : The following 1 profile is active: "test"
+2025-11-14T20:06:53.126+01:00  INFO 84924 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-14T20:06:53.247+01:00  INFO 84924 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 109 ms. Found 11 JPA repository interfaces.
+2025-11-14T20:06:53.990+01:00  INFO 84924 --- [supplychainx] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-14T20:06:54.042+01:00  INFO 84924 --- [supplychainx] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-14T20:06:54.079+01:00  INFO 84924 --- [supplychainx] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-14T20:06:54.396+01:00  INFO 84924 --- [supplychainx] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-14T20:06:54.432+01:00  INFO 84924 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-14T20:06:54.779+01:00  INFO 84924 --- [supplychainx] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1f1ffc18
+2025-11-14T20:06:54.780+01:00  INFO 84924 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-14T20:06:54.811+01:00  WARN 84924 --- [supplychainx] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-14T20:06:54.834+01:00  INFO 84924 --- [supplychainx] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-14T20:06:56.080+01:00  INFO 84924 --- [supplychainx] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-14T20:06:56.189+01:00  INFO 84924 --- [supplychainx] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:06:56.761+01:00  INFO 84924 --- [supplychainx] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-14T20:06:58.240+01:00  WARN 84924 --- [supplychainx] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-14T20:06:59.226+01:00  INFO 84924 --- [supplychainx] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-14T20:06:59.226+01:00  INFO 84924 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-14T20:06:59.229+01:00  INFO 84924 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2025-11-14T20:06:59.317+01:00  INFO 84924 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Started RawMaterialControllerIntegrationTest in 7.778 seconds (process running for 14.454)
+2025-11-14T20:07:00.185+01:00  INFO 84924 --- [supplychainx] [main] c.e.supplychainx.aspects.AuthAspect      : Authentification rÃ©ussie. RÃ´le stockÃ© dans AuthContext: ADMIN
+2025-11-14T20:07:00.595+01:00  WARN 84924 --- [supplychainx] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23505
+2025-11-14T20:07:00.595+01:00 ERROR 84924 --- [supplychainx] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERREUR: la valeur d'une clÃ© dupliquÃ©e rompt la contrainte unique Â« users_email_key Â»
+  DÃ©tailÂ : La clÃ© Â« (email)=(admin@supply.com) Â» existe dÃ©jÃ .
+2025-11-14T20:07:00.992+01:00  INFO 84924 --- [supplychainx] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:07:01.098+01:00  INFO 84924 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-14T20:07:01.105+01:00  INFO 84924 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-14T20:23:03.195+01:00  INFO 67156 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Starting RawMaterialControllerIntegrationTest using Java 24.0.1 with PID 67156 (started by Youcode in C:\Users\Youcode\Desktop\supplychainx)
+2025-11-14T20:23:03.197+01:00  INFO 67156 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : The following 1 profile is active: "test"
+2025-11-14T20:23:04.289+01:00  INFO 67156 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-14T20:23:04.446+01:00  INFO 67156 --- [supplychainx] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 141 ms. Found 11 JPA repository interfaces.
+2025-11-14T20:23:05.266+01:00  INFO 67156 --- [supplychainx] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-14T20:23:05.322+01:00  INFO 67156 --- [supplychainx] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-14T20:23:05.359+01:00  INFO 67156 --- [supplychainx] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-14T20:23:05.659+01:00  INFO 67156 --- [supplychainx] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-14T20:23:05.696+01:00  INFO 67156 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-14T20:23:05.998+01:00  INFO 67156 --- [supplychainx] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@52b30dcd
+2025-11-14T20:23:06.000+01:00  INFO 67156 --- [supplychainx] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-14T20:23:06.034+01:00  WARN 67156 --- [supplychainx] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-14T20:23:06.061+01:00  INFO 67156 --- [supplychainx] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-14T20:23:07.324+01:00  INFO 67156 --- [supplychainx] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-14T20:23:07.454+01:00  INFO 67156 --- [supplychainx] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:23:08.080+01:00  INFO 67156 --- [supplychainx] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-14T20:23:09.576+01:00  WARN 67156 --- [supplychainx] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-14T20:23:10.348+01:00  INFO 67156 --- [supplychainx] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-14T20:23:10.349+01:00  INFO 67156 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-14T20:23:10.350+01:00  INFO 67156 --- [supplychainx] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-14T20:23:10.410+01:00  INFO 67156 --- [supplychainx] [main] s.t.RawMaterialControllerIntegrationTest : Started RawMaterialControllerIntegrationTest in 7.615 seconds (process running for 14.022)
+2025-11-14T20:23:11.318+01:00  INFO 67156 --- [supplychainx] [main] c.e.supplychainx.aspects.AuthAspect      : Authentification rÃ©ussie. RÃ´le stockÃ© dans AuthContext: ADMIN
+2025-11-14T20:23:11.731+01:00  INFO 67156 --- [supplychainx] [main] c.e.supplychainx.aspects.AuthAspect      : Authentification rÃ©ussie. RÃ´le stockÃ© dans AuthContext: ADMIN
+2025-11-14T20:23:12.183+01:00  INFO 67156 --- [supplychainx] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-14T20:23:12.264+01:00  INFO 67156 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-14T20:23:12.283+01:00  INFO 67156 --- [supplychainx] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
