@@ -1,11 +1,12 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5433/supplyx
-    username: supplyx
-    password: supplyx
+#  datasource:
+#    url: jdbc:postgresql://localhost:5433/supplyx
+#    username: supplyx
+#    password: supplyx
   jpa:
     hibernate:
       ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
   test:
     database:

@@ -102,38 +102,6 @@ public class OrderService {
     }
 
 
-//    @Transactional
-//    public OrderResponseDTO updateStatus(Long id, String status){
-//        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Ordre de production non trouvé avec id: " + id));
-//        OrderStatus newStatus;
-//        try{
-//            newStatus = OrderStatus.valueOf(status);
-//        } catch (IllegalArgumentException e) {
-//            throw new InvalidOrderStatusException("Le statut fourni est invalide: " + status);
-//        }
-//        if(order.getStatus() == OrderStatus.LIVREE){
-//            throw new BusinessException(
-//                    "Impossible de bloquer l'ordre " + id + ". Son statut actuel est: " + order.getStatus() +
-//                            ". Le blocage n'est autorisé que pour le statut " + ProductionOrderStatus.EN_ATTENTE
-//            );
-//        }
-//        order.setStatus(newStatus);
-//        Order updated = orderRepository.save(order);
-////        ProductResponseDTO product = productService.getProductById(order.getProduct().getId());
-////        int stock = product.getStock();
-////        int new_stock = stock - order.getQuantity();
-////        product.setStock(new_stock);
-////        productService.
-//        Optional<Product> byId = productRepository.findById(order.getProduct().getId());
-//        Product product = byId.get();
-//        int stock = product.getStock();
-//        int new_stock = stock - order.getQuantity();
-//        product.setStock(new_stock);
-//        return orderMapper.toResponseDto(updated);
-//    }
-
-    // Dans OrderService (service_delivery)
-
     @Transactional
     public OrderResponseDTO updateStatus(Long id, String status){
         Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Commande non trouvée avec id: " + id));

@@ -10,6 +10,7 @@ import com.example.supplychainx.service_production.mapper.ProductionOrderMapper;
 import com.example.supplychainx.service_production.model.Product;
 import com.example.supplychainx.service_production.model.ProductionOrder;
 import com.example.supplychainx.service_production.model.enums.ProductionOrderStatus;
+import com.example.supplychainx.service_production.repository.BillOfMaterialRepository;
 import com.example.supplychainx.service_production.repository.ProductRepository;
 import com.example.supplychainx.service_production.repository.ProductionOrderRepository;
 import com.example.supplychainx.service_production.service.ProductionOrderService;
@@ -35,6 +36,8 @@ class ProductionOrderServiceTest {
     private ProductionOrderRepository productionOrderRepository;
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private BillOfMaterialRepository billOfMaterialRepository;
     @Mock
     private ProductionOrderMapper productionOrderMapper;
     @Mock
@@ -63,14 +66,12 @@ class ProductionOrderServiceTest {
         product.setProductionTime(PRODUCTION_TIME);
         product.setStock(100);
 
-        // DTO de Requête
         requestDTO = new ProductionOrderRequestDTO();
         requestDTO.setProductId(PRODUCT_ID);
         requestDTO.setQuantity(QUANTITY);
         requestDTO.setStartDate(START_DATE);
         requestDTO.setEndDate(END_DATE);
 
-        // Entité Ordre de Production
         order = new ProductionOrder();
         order.setId(ORDER_ID);
         order.setProduct(product);
@@ -79,7 +80,6 @@ class ProductionOrderServiceTest {
         order.setEndDate(END_DATE);
         order.setStatus(ProductionOrderStatus.EN_ATTENTE);
 
-        // DTO de Réponse
         responseDTO = new ProductionOrderResponseDTO();
         responseDTO.setId(ORDER_ID);
         responseDTO.setProductId(PRODUCT_ID);
@@ -87,19 +87,15 @@ class ProductionOrderServiceTest {
         responseDTO.setStatus(ProductionOrderStatus.EN_ATTENTE);
     }
 
-    // --- Tests pour addProductionOrder ---
     @Test
     void addProductionOrder_Success() {
-        // Arrange
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(product));
         when(productionOrderMapper.toEntity(requestDTO)).thenReturn(order);
         when(productionOrderRepository.save(any(ProductionOrder.class))).thenReturn(order);
         when(productionOrderMapper.toResponseDto(order)).thenReturn(responseDTO);
 
-        // Act
         ProductionOrderResponseDTO result = productionOrderService.addProductionOrder(requestDTO);
 
-        // Assert
         assertNotNull(result);
         assertEquals(ProductionOrderStatus.EN_ATTENTE, order.getStatus());
         verify(productionOrderRepository).save(order);
@@ -107,21 +103,17 @@ class ProductionOrderServiceTest {
 
     @Test
     void addProductionOrder_ThrowsProductNotFoundException() {
-        // Arrange
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(ProductNotFoundException.class, () -> productionOrderService.addProductionOrder(requestDTO));
         verify(productionOrderRepository, never()).save(any());
     }
 
     @Test
     void addProductionOrder_ThrowsBusinessException_InvalidDates() {
-        // Arrange
         requestDTO.setStartDate(END_DATE.plusDays(1)); // Start Date > End Date
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(product));
 
-        // Act & Assert
         assertThrows(BusinessException.class, () -> productionOrderService.addProductionOrder(requestDTO));
         verify(productionOrderRepository, never()).save(any());
     }
@@ -129,48 +121,39 @@ class ProductionOrderServiceTest {
     // --- Tests pour getAllProductionOrders ---
     @Test
     void getAllProductionOrders_Success() {
-        // Arrange
         Page<ProductionOrder> orderPage = new PageImpl<>(Collections.singletonList(order));
         when(productionOrderRepository.findAll(pageable)).thenReturn(orderPage);
         when(productionOrderMapper.toResponseDto(order)).thenReturn(responseDTO);
 
-        // Act
         Page<ProductionOrderResponseDTO> result = productionOrderService.getAllProductionOrders(pageable);
 
-        // Assert
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         verify(productionOrderRepository).findAll(pageable);
     }
 
-    // --- Tests pour getProductionOrderById ---
+
     @Test
     void getProductionOrderById_Success() {
-        // Arrange
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
         when(productionOrderMapper.toResponseDto(order)).thenReturn(responseDTO);
 
-        // Act
         ProductionOrderResponseDTO result = productionOrderService.getProductionOrderById(ORDER_ID);
 
-        // Assert
         assertNotNull(result);
         assertEquals(ORDER_ID, result.getId());
     }
 
     @Test
     void getProductionOrderById_ThrowsProductionOrderNotFoundException() {
-        // Arrange
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(ProductionOrderNotFoundException.class, () -> productionOrderService.getProductionOrderById(ORDER_ID));
     }
 
-    // --- Tests pour updateProductionOrder ---
+
     @Test
     void updateProductionOrder_Success() {
-        // Arrange
         ProductionOrderRequestDTO updateDto = new ProductionOrderRequestDTO();
         updateDto.setProductId(PRODUCT_ID);
         updateDto.setQuantity(100);
@@ -180,16 +163,13 @@ class ProductionOrderServiceTest {
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(product));
 
-        // Simuler la mise à jour (le mapper modifie 'order')
         doNothing().when(productionOrderMapper).updateEntityFromDto(updateDto, order);
 
         when(productionOrderRepository.save(order)).thenReturn(order);
         when(productionOrderMapper.toResponseDto(order)).thenReturn(responseDTO);
 
-        // Act
         ProductionOrderResponseDTO result = productionOrderService.updateProductionOrder(ORDER_ID, updateDto);
 
-        // Assert
         assertNotNull(result);
         verify(productionOrderMapper).updateEntityFromDto(updateDto, order);
         verify(productionOrderRepository).save(order);
@@ -197,89 +177,70 @@ class ProductionOrderServiceTest {
 
     @Test
     void updateProductionOrder_ThrowsProductionOrderNotFoundException() {
-        // Arrange
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(ProductionOrderNotFoundException.class, () -> productionOrderService.updateProductionOrder(ORDER_ID, requestDTO));
         verify(productRepository, never()).findById(anyLong());
     }
 
     @Test
     void updateProductionOrder_ThrowsBusinessException_InvalidDates() {
-        // Arrange
         requestDTO.setStartDate(END_DATE.plusDays(1)); // Start Date > End Date
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(product));
 
-        // Act & Assert
         assertThrows(BusinessException.class, () -> productionOrderService.updateProductionOrder(ORDER_ID, requestDTO));
         verify(productionOrderRepository, never()).save(any());
     }
 
-    // --- Tests pour deleteProductionOrder ---
+
     @Test
     void deleteProductionOrder_Success() {
-        // Arrange
         when(productionOrderRepository.existsById(ORDER_ID)).thenReturn(true);
 
-        // Act
         productionOrderService.deleteProductionOrder(ORDER_ID);
 
-        // Assert
         verify(productionOrderRepository).existsById(ORDER_ID);
         verify(productionOrderRepository).deleteById(ORDER_ID);
     }
 
     @Test
     void deleteProductionOrder_ThrowsProductionOrderNotFoundException() {
-        // Arrange
         when(productionOrderRepository.existsById(ORDER_ID)).thenReturn(false);
 
-        // Act & Assert
         assertThrows(ProductionOrderNotFoundException.class, () -> productionOrderService.deleteProductionOrder(ORDER_ID));
         verify(productionOrderRepository, never()).deleteById(anyLong());
     }
 
-    // --- Tests pour getEstimatedProductionTime ---
     @Test
     void getEstimatedProductionTime_Success() {
-        // Arrange
         // Quantity = 50, ProductionTime = 2. Expected = 100L
         Long expectedTime = (long) QUANTITY * PRODUCTION_TIME;
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
 
-        // Act
         Long result = productionOrderService.getEstimatedProductionTime(ORDER_ID);
 
-        // Assert
         assertEquals(expectedTime, result);
     }
 
     @Test
     void getEstimatedProductionTime_ThrowsProductionOrderNotFoundException() {
-        // Arrange
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(ProductionOrderNotFoundException.class, () -> productionOrderService.getEstimatedProductionTime(ORDER_ID));
     }
 
     @Test
     void getEstimatedProductionTime_ThrowsProductNotFoundException() {
-        // Arrange
-        order.setProduct(null); // Simuler un produit manquant
+        order.setProduct(null);
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
 
-        // Act & Assert
         assertThrows(ProductNotFoundException.class, () -> productionOrderService.getEstimatedProductionTime(ORDER_ID));
     }
 
 
-    // --- Tests pour blockProductionOrder ---
     @Test
     void blockProductionOrder_Success() {
-        // Arrange
         order.setStatus(ProductionOrderStatus.EN_ATTENTE);
         ProductionOrder blockedOrder = new ProductionOrder();
         blockedOrder.setStatus(ProductionOrderStatus.BLOQUE);
@@ -291,54 +252,45 @@ class ProductionOrderServiceTest {
         blockedResponse.setStatus(ProductionOrderStatus.BLOQUE);
         when(productionOrderMapper.toResponseDto(blockedOrder)).thenReturn(blockedResponse);
 
-        // Act
         ProductionOrderResponseDTO result = productionOrderService.blockProductionOrder(ORDER_ID);
 
-        // Assert
         assertEquals(ProductionOrderStatus.BLOQUE, result.getStatus());
         verify(productionOrderRepository).save(order);
     }
 
     @Test
     void blockProductionOrder_ThrowsBusinessException_StatusNotEN_ATTENTE() {
-        // Arrange
         order.setStatus(ProductionOrderStatus.EN_PRODUCTION);
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
 
-        // Act & Assert
         assertThrows(BusinessException.class, () -> productionOrderService.blockProductionOrder(ORDER_ID));
         verify(productionOrderRepository, never()).save(any());
     }
 
-    // --- Tests pour updateStatus ---
-//    @Test
-//    void updateStatus_Success_ToEN_PRODUCTION() {
-//        // Arrange
-//        String newStatusString = "EN_PRODUCTION";
-//        order.setStatus(ProductionOrderStatus.EN_ATTENTE);
-//
-//        ProductionOrder runningOrder = new ProductionOrder();
-//        runningOrder.setStatus(ProductionOrderStatus.EN_PRODUCTION);
-//
-//        when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
-//        when(productionOrderRepository.save(any(ProductionOrder.class))).thenReturn(runningOrder);
-//
-//        ProductionOrderResponseDTO runningResponse = new ProductionOrderResponseDTO();
-//        runningResponse.setStatus(ProductionOrderStatus.EN_PRODUCTION);
-//        when(productionOrderMapper.toResponseDto(runningOrder)).thenReturn(runningResponse);
-//
-//        // Act
-//        ProductionOrderResponseDTO result = productionOrderService.updateStatus(ORDER_ID, newStatusString);
-//
-//        // Assert
-//        assertEquals(ProductionOrderStatus.EN_PRODUCTION, result.getStatus());
-//        verify(productRepository, never()).save(any()); // Pas de mise à jour de stock
-//        verify(productionOrderRepository).save(order);
-//    }
+    @Test
+    void updateStatus_Success_ToEN_PRODUCTION() {
+        String newStatusString = "EN_PRODUCTION";
+        order.setStatus(ProductionOrderStatus.EN_ATTENTE);
+
+        ProductionOrder runningOrder = new ProductionOrder();
+        runningOrder.setStatus(ProductionOrderStatus.EN_PRODUCTION);
+
+        when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
+        when(productionOrderRepository.save(any(ProductionOrder.class))).thenReturn(runningOrder);
+
+        ProductionOrderResponseDTO runningResponse = new ProductionOrderResponseDTO();
+        runningResponse.setStatus(ProductionOrderStatus.EN_PRODUCTION);
+        when(productionOrderMapper.toResponseDto(runningOrder)).thenReturn(runningResponse);
+
+        ProductionOrderResponseDTO result = productionOrderService.updateStatus(ORDER_ID, newStatusString);
+
+        assertEquals(ProductionOrderStatus.EN_PRODUCTION, result.getStatus());
+        verify(productRepository, never()).save(any());
+        verify(productionOrderRepository).save(order);
+    }
 
     @Test
     void updateStatus_Success_ToTERMINE_UpdatesStock() {
-        // Arrange
         String newStatusString = "TERMINE";
         order.setStatus(ProductionOrderStatus.EN_PRODUCTION);
         int initialStock = product.getStock(); // 100
@@ -354,11 +306,8 @@ class ProductionOrderServiceTest {
         completedResponse.setStatus(ProductionOrderStatus.TERMINE);
         when(productionOrderMapper.toResponseDto(completedOrder)).thenReturn(completedResponse);
 
-        // Act
         productionOrderService.updateStatus(ORDER_ID, newStatusString);
 
-        // Assert
-        // Stock: initial (100) + quantity (50) = 150
         assertEquals(initialStock + QUANTITY, product.getStock());
         verify(productRepository).save(product);
         verify(productionOrderRepository).save(order);
@@ -366,22 +315,18 @@ class ProductionOrderServiceTest {
 
     @Test
     void updateStatus_ThrowsInvalidOrderStatusException() {
-        // Arrange
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
 
-        // Act & Assert
         assertThrows(InvalidOrderStatusException.class, () -> productionOrderService.updateStatus(ORDER_ID, "STATUT_INVALIDE"));
     }
 
     @Test
     void updateStatus_ThrowsBusinessException_AlreadyTERMINE() {
-        // Arrange
         order.setStatus(ProductionOrderStatus.TERMINE);
-        String newStatusString = "TERMINE"; // Tentative de définir à nouveau TERMINE
+        String newStatusString = "TERMINE";
 
         when(productionOrderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
 
-        // Act & Assert
         assertThrows(BusinessException.class, () -> productionOrderService.updateStatus(ORDER_ID, newStatusString));
         verify(productionOrderRepository, never()).save(any());
         verify(productRepository, never()).save(any());
