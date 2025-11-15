@@ -10,7 +10,7 @@ spring:
     show-sql: false
   test:
     database:
-      replace: none
+#      replace: none
 
 logging:
   level:
