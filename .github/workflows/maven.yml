@@ -27,8 +27,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn clean install
+    - name: Compile and Package (Skip Tests)
+      run: mvn clean package -DskipTests
+    - name: Run Unit and Integration Tests
+      run: mvn test -X
+
+    - name: Upload Test Reports on Failure
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: surefire-reports-${{ github.sha }}
+        path: target/surefire-reports/
 
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
