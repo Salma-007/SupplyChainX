@@ -4,8 +4,6 @@ import com.example.supplychainx.service_approvisionnement.dto.User.UserRequestDT
 import com.example.supplychainx.service_approvisionnement.dto.User.UserResponseDTO;
 import com.example.supplychainx.service_approvisionnement.model.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
