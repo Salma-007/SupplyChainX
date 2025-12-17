@@ -31,7 +31,8 @@ public class GlobalExceptionHandler {
             OrderNotFoundException.class,
             ProductionOrderNotFoundException.class,
             ProductNotFoundException.class,
-            InvalidOrderStatusException.class
+            InvalidOrderStatusException.class,
+            JwtAuthenticationException.class
     })
     public ResponseEntity<Object> handleNotFoundExceptions(Exception ex, WebRequest request) {
         return buildErrorResponse(
@@ -57,5 +58,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(body, status);
     }
+
 
 }
