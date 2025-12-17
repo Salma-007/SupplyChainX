@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@RoleRequired({"ADMIN"})
+//@RoleRequired({"ADMIN"})
 public class UserController {
     private final UserService userService;
 

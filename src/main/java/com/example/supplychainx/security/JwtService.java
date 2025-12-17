@@ -3,13 +3,12 @@ package com.example.supplychainx.security;
 import com.example.supplychainx.service_approvisionnement.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import java.security.Key;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
@@ -17,18 +16,15 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
-    private Key getKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
-    }
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getId().toString())
-                .claim("email", user.getEmail())
+                .subject(user.getEmail())
+                .claim("userId", user.getId())
                 .claim("role", user.getRole())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 900000))
-                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 900000))
+                .signWith(getKey())
                 .compact();
     }
 
@@ -45,11 +41,15 @@ public class JwtService {
         return extractClaims(token).getExpiration().before(new Date());
     }
 
+    private SecretKey getKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
     private Claims extractClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getKey())
+                .verifyWith(getKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }
