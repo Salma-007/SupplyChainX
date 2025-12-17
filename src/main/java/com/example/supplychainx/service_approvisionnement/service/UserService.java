@@ -7,9 +7,11 @@ import com.example.supplychainx.service_approvisionnement.mapper.UserMapper;
 import com.example.supplychainx.service_approvisionnement.model.User;
 import com.example.supplychainx.service_approvisionnement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,9 +20,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponseDTO createUser(UserRequestDTO dto) {
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User saved = userRepository.save(user);
         return userMapper.toResponseDto(saved);
     }
@@ -51,6 +55,14 @@ public class UserService {
             throw new UserNotFoundException("user not found with id : " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public User findUserByEmail(String email){
+        Optional<User> findHim = userRepository.findByEmail(email);
+        if(findHim.isEmpty()){
+            throw new UserNotFoundException("user not found with email : " + email);
+        }
+        return findHim.get();
     }
 
 

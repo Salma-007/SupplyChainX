@@ -5,12 +5,13 @@ import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMat
 import com.example.supplychainx.service_approvisionnement.dto.RawMaterial.RawMaterialResponseDTO;
 import com.example.supplychainx.service_approvisionnement.service.RawMaterialService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/raw-materials")
-@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","ADMIN"})
+//@RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","ADMIN"})
 public class RawMaterialController {
 
     private final RawMaterialService rawMaterialService;
@@ -29,7 +30,8 @@ public class RawMaterialController {
         return ResponseEntity.ok(rawMaterialService.getMaterialById(id));
     }
 
-    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","SUPERVISEUR_LOGISTIQUE", "ADMIN"})
+//    @RoleRequired({"GESTIONNAIRE_APPROVISIONNEMENT","SUPERVISEUR_LOGISTIQUE", "ADMIN"})
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<RawMaterialResponseDTO>> getAll() {
         return ResponseEntity.ok(rawMaterialService.getAllMaterials());

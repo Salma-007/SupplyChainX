@@ -151,27 +151,9 @@ public class ProductionOrderService {
                 int currentStock = rawMaterial.getStock();
 
                 if (currentStock < requiredQuantity) {
-
-                    int quantityToOrder = requiredQuantity - currentStock;
-
-                    SupplyOrderItemDTO itemDTO = new SupplyOrderItemDTO(
-                            rawMaterial.getId(),
-                            quantityToOrder
-                    );
-
-                    SupplyOrderRequestDTO supplyDTO = new SupplyOrderRequestDTO(
-                            1L,
-                            List.of(itemDTO)
-                    );
-
-                    supplyOrderService.createOrder(supplyDTO);
-
-                    order.setStatus(ProductionOrderStatus.EN_ATTENTE);
-                    productionOrderRepository.save(order);
-
                     throw new BusinessException(
                             "Matière première insuffisante: " + rawMaterial.getName() +
-                                    ". Requis: " + requiredQuantity + ". Un ordre fournisseur a été lancé. Production maintenue à EN_ATTENTE."
+                                    " vous devez faire un ordre au service d'approvisionnement!"
                     );
                 }
             }

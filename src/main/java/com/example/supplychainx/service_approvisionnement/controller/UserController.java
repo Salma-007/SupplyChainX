@@ -20,6 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
         return ResponseEntity.ok(userService.createUser(dto));
