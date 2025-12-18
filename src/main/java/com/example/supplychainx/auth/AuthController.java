@@ -44,7 +44,8 @@ public class AuthController {
                     String token = jwtService.generateToken(user); // Nouveau Access Token
                     return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
                 })
-                .orElseThrow(() -> new RuntimeException("Refresh token is not in database!"));
+                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.FORBIDDEN, "Refresh token is not in database!"));
     }
 }
 

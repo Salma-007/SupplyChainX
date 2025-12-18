@@ -37,11 +37,9 @@ public class AuthService {
 
         User user = (User) auth.getPrincipal();
 
-        // 4. Générez les deux tokens
         String jwt = jwtService.generateToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
 
-        // 5. Renvoyez l'objet complet
         return new AuthResponse(jwt, refreshToken.getToken());
     }
 }
