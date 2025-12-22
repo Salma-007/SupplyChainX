@@ -7,6 +7,8 @@ services:
     container_name: supplyx-app
     depends_on:
       - db
+    volumes:
+      - ./logs:/logs
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/supplyx
       SPRING_DATASOURCE_USERNAME: supplyx
@@ -36,6 +38,45 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  # elasticsearch
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: supplyx-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    networks:
+      - supplyxnet
+
+  # kibana
+  kibana:
+    image: kibana:8.12.0
+    container_name: supplyx-kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    networks:
+      - supplyxnet
+
+  # logstash
+  logstash:
+    image: logstash:8.12.0
+    container_name: supplyx-logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logs:/logs
+    ports:
+      - "5044:5044"
+    networks:
+      - supplyxnet
+
 
   # sonarcube
   sonarqube:
