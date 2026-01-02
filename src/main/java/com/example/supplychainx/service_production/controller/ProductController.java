@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-@RoleRequired({"CHEF_PRODUCTION"})
+//@RoleRequired({"CHEF_PRODUCTION"})
 public class ProductController {
     private final ProductService productService;
 
