@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class KeycloakJwtConverter
         implements Converter<Jwt, AbstractAuthenticationToken> {
 
-    private final String clientId = "SupplyX"; // ⚠️ nom EXACT du client
+    private final String clientId = "supplyx"; // ⚠️ nom EXACT du client
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
@@ -36,6 +36,8 @@ public class KeycloakJwtConverter
                             .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                             .collect(Collectors.toList())
             );
+            System.out.println("******************");
+            System.out.println(authorities);
         }
 
         return new JwtAuthenticationToken(jwt, authorities);

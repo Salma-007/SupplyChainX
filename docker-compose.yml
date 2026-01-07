@@ -7,6 +7,7 @@ services:
     container_name: supplyx-app
     depends_on:
       - db
+      - keycloak
     volumes:
       - ./logs:/logs
     environment:
@@ -14,12 +15,15 @@ services:
       SPRING_DATASOURCE_USERNAME: supplyx
       SPRING_DATASOURCE_PASSWORD: supplyx
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:9090/realms/SupplyX
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak_demo:8080/realms/SupplyX/protocol/openid-connect/certs
+
     ports:
       - "8080:8080"
     networks:
       - supplyxnet
 
-  #  database postgres
+  #database postgres
   db:
     image: postgres:15
     container_name: supplyx-db
@@ -45,6 +49,8 @@ services:
     image: quay.io/keycloak/keycloak:25.0.5
     ports:
       - 9090:8080
+    networks:
+      - supplyxnet
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: password
